@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import MountainScene from "@/components/MountainScene";
@@ -15,6 +16,25 @@ import { getChannelContent, getChannelStats, thumb, watchUrl } from "@/lib/youtu
 
 // Har 15 minute mein YouTube se nayi videos + stats refresh (ISR)
 export const revalidate = 900;
+
+export const metadata: Metadata = {
+  title: "Krrish Tapwal — Himachali Explorer & XploreWithKrrish YouTuber",
+  description:
+    "Explore Himachal with Krrish Tapwal — hidden treks, ancient temples, forts, Royal Enfield rides and real travel stories on XploreWithKrrish.",
+  alternates: { canonical: "/" },
+  openGraph: {
+    type: "profile",
+    url: "/",
+    title: "Krrish Tapwal — Himachal Travel Vlogs & Adventures",
+    description:
+      "Hidden trails, sacred temples, old forts and mountain rides across Himachal Pradesh with XploreWithKrrish.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Krrish Tapwal — Himachali Explorer",
+    description: "Explore hidden places and real stories from Himachal Pradesh.",
+  },
+};
 
 const pillars = [
   { Icon: MountainIcon, title: "Treks & Trails", text: "Gaon ki pagdandiyon se pahadon ki chotiyon tak — har trek ek nayi kahani." },

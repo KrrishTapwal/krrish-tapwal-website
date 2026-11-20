@@ -13,6 +13,7 @@ export const metadata: Metadata = {
     "Krrish Tapwal's store — XploreWithKrrish merch (tees, hoodies, caps), pure Pahadi desi ghee and Himachali goodies from the mountains. Coming soon.",
   alternates: { canonical: "/shop" },
   openGraph: { url: "/shop", title: "Krrish Store — Coming soon", description: "Merch, Pahadi desi ghee & Himachali goodies." },
+  robots: { index: false, follow: true },
 };
 
 const promises = [
