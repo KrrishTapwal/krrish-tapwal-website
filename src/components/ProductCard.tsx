@@ -12,7 +12,7 @@ const tones: Record<Product["tone"], string> = {
 };
 
 function notifyHref(p: Product) {
-  const msg = `Hi Krrish! Mujhe "${p.name}" mein interest hai — launch hone par batana.`;
+  const msg = `Hi Krrish, I'm interested in "${p.name}". Please let me know when it launches.`;
   if (site.socials.whatsapp) return `${site.socials.whatsapp}${site.socials.whatsapp.includes("?") ? "&" : "?"}text=${encodeURIComponent(msg)}`;
   if (site.email) return `mailto:${site.email}?subject=${encodeURIComponent(`Notify me: ${p.name}`)}&body=${encodeURIComponent(msg)}`;
   if (site.socials.instagram) return site.socials.instagram;

@@ -14,14 +14,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: lastVideo,
       changeFrequency: "weekly",
       priority: 1,
-      images: [`${site.url}/images/krrish-tapwal.jpg`],
+      images: [`${site.url}${site.profileImagePath}`],
     },
     {
       url: `${site.url}/about`,
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.9,
-      images: [`${site.url}/images/krrish-tapwal-portrait.jpg`],
+      images: [`${site.url}${site.profileImagePath}`],
     },
     {
       url: `${site.url}/videos`,

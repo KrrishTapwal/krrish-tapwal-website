@@ -12,7 +12,7 @@ import { getChannelContent, getChannelStats } from "@/lib/youtube";
 export const revalidate = 900;
 
 export const metadata: Metadata = {
-  title: "Videos — Krrish Tapwal YouTube Vlogs, Treks & Shorts",
+  title: "Videos & Shorts",
   description:
     "Watch all videos by Krrish Tapwal (XploreWithKrrish): Himachal travel vlogs, Kamlah Fort, Kanchana Mata Mandir, Awahdevi, Bengaluru to Himachal road trip, Royal Enfield Meteor 350, Scorpio Classic S11 and shorts.",
   alternates: { canonical: "/videos" },
@@ -49,7 +49,7 @@ export default async function VideosPage() {
                 Videos <span className="text-gradient">&amp; Shorts</span>
               </h1>
               <p className="mt-5 max-w-xl text-lg text-mist">
-                {videos.length} long videos, {shorts.length} shorts aur {compactNumber(live.views)}+ views — Himachal ki har kahani, ek jagah.
+                {videos.length} videos, {shorts.length} Shorts, and {compactNumber(live.views)}+ channel views — explore every story in one place.
               </p>
             </div>
             <a href={site.youtube.subscribeUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary self-start md:self-auto">

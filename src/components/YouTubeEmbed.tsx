@@ -48,7 +48,7 @@ export default function YouTubeEmbed({
             sizes="(min-width: 1024px) 60vw, 100vw"
             className="object-cover transition duration-700 group-hover:scale-[1.03]"
           />
-          <span className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent" />
+          <span className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
           <span className="absolute left-1/2 top-1/2 grid size-20 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-snow text-ink shadow-[0_0_0_10px_rgb(255_255_255/0.15)] transition duration-500 group-hover:scale-110 group-hover:bg-sage group-hover:shadow-[0_0_0_16px_rgb(125_190_120/0.2)]">
             <PlayIcon width={30} height={30} className="translate-x-0.5" />
           </span>

@@ -8,18 +8,18 @@ import { site } from "@/data/site";
 import { breadcrumbSchema, graph } from "@/lib/schema";
 
 export const metadata: Metadata = {
-  title: "Shop — XploreWithKrrish Merch, Pahadi Desi Ghee & Himachali Goodies",
+  title: "Shop",
   description:
-    "Krrish Tapwal's store — XploreWithKrrish merch (tees, hoodies, caps), pure Pahadi desi ghee and Himachali goodies from the mountains. Coming soon.",
+    "The upcoming Krrish Tapwal store will feature XploreWithKrrish merchandise and locally sourced products from Himachal Pradesh.",
   alternates: { canonical: "/shop" },
   openGraph: { url: "/shop", title: "Krrish Store — Coming soon", description: "Merch, Pahadi desi ghee & Himachali goodies." },
   robots: { index: false, follow: true },
 };
 
 const promises = [
-  { t: "Seedha pahadon se", d: "Himachal ke gaon aur local makers se sourced." },
-  { t: "Shuddh & honest", d: "Jo khud use karta hoon, wahi bechunga." },
-  { t: "Community first", d: "Subscribers ko sabse pehle access aur special offers." },
+  { t: "Sourced locally", d: "Products from Himachal's villages and local makers." },
+  { t: "Quality first", d: "Thoughtfully selected products with clear information." },
+  { t: "Community focused", d: "Early access and updates for subscribers." },
 ];
 
 export default function ShopPage() {
@@ -46,7 +46,7 @@ export default function ShopPage() {
               Krrish <span className="text-gradient">Store</span>
             </h1>
             <p className="mt-6 max-w-2xl text-xl text-mist">
-              {site.brand} merch, pahadi desi ghee aur Himachal ki asli cheezein — seedha pahadon se aapke ghar tak.
+              {site.brand} merchandise and selected products from Himachal Pradesh, delivered to your home.
             </p>
           </Reveal>
           <Reveal delay={120} className="mt-10 grid gap-4 sm:grid-cols-3">
@@ -78,8 +78,8 @@ export default function ShopPage() {
       <section className="container-x pt-12">
         <Reveal className="card flex flex-col items-start justify-between gap-6 p-8 md:flex-row md:items-center md:p-12">
           <div>
-            <h2 className="text-3xl font-bold sm:text-4xl">Launch miss mat karna!</h2>
-            <p className="mt-2 max-w-xl text-mist">Store launch ki announcement sabse pehle YouTube par hogi — subscribe karke bell icon on kar lo.</p>
+            <h2 className="text-3xl font-bold sm:text-4xl">Stay updated</h2>
+            <p className="mt-2 max-w-xl text-mist">The store launch will be announced on YouTube. Subscribe to be among the first to know.</p>
           </div>
           <a href={site.youtube.subscribeUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
             <YouTubeIcon /> Subscribe for updates

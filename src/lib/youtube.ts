@@ -5,6 +5,8 @@ const FEED_URL = `https://www.youtube.com/feeds/videos.xml?channel_id=${site.you
 // Har 15 minute mein YouTube se nayi uploads + stats check hote hain (ISR).
 // Note: page files mein `export const revalidate = 900` bhi isi value se match karta hai.
 export const YT_REVALIDATE = 900;
+const PROFILE_IMAGE_FALLBACK = "/images/krrish-tapwal-portrait.jpg";
+const PROFILE_PAGE_URL = `https://www.youtube.com/${site.youtube.handle}`;
 
 type FeedEntry = {
   id: string;
@@ -64,6 +66,41 @@ function guessCategory(text: string): VideoCategory {
 }
 
 export type ChannelStats = { subscribers: number; views: number; videos: number };
+
+export async function getChannelProfileImage(): Promise<string> {
+  try {
+    const res = await fetch(PROFILE_PAGE_URL, {
+      headers: {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36",
+        "Accept-Language": "en-US,en;q=0.9",
+        Cookie: "CONSENT=YES+1",
+      },
+      next: { revalidate: YT_REVALIDATE },
+    });
+    if (!res.ok) {
+      console.warn(`Could not load the YouTube channel page for its profile image: ${res.status}`);
+      return PROFILE_IMAGE_FALLBACK;
+    }
+
+    const html = await res.text();
+    const rawUrl = html.match(/"avatar"\s*:\s*\{"thumbnails":\[\{"url":"([^"]+)"/)?.[1];
+    if (!rawUrl) {
+      console.warn("The YouTube channel page did not include a profile image; using the local fallback.");
+      return PROFILE_IMAGE_FALLBACK;
+    }
+
+    const avatarUrl = new URL(rawUrl.replace(/\\u0026/g, "&").replace(/\\\//g, "/"));
+    if (avatarUrl.hostname !== "yt3.googleusercontent.com" && avatarUrl.hostname !== "yt3.ggpht.com") {
+      console.warn("The YouTube channel profile image URL used an unexpected host; using the local fallback.");
+      return PROFILE_IMAGE_FALLBACK;
+    }
+
+    return avatarUrl.toString();
+  } catch (error) {
+    console.error("Failed to fetch the current YouTube profile image.", error);
+    return PROFILE_IMAGE_FALLBACK;
+  }
+}
 
 function parseCount(raw?: string) {
   if (!raw) return undefined;

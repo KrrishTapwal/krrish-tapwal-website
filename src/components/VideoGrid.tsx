@@ -11,7 +11,7 @@ export default function VideoGrid({ videos }: { videos: Video[] }) {
 
   const chip = (active: boolean) =>
     `rounded-full border px-4 py-2 text-sm font-medium transition ${
-      active ? "border-snow bg-snow text-ink" : "border-line text-mist hover:border-white/25 hover:text-snow"
+      active ? "border-snow bg-snow text-ink" : "border-line text-mist hover:border-black/25 hover:text-snow"
     }`;
 
   return (

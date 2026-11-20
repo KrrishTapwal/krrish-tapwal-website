@@ -48,12 +48,12 @@ export function VideoCard({ video, delay = 0 }: { video: Video; delay?: number }
             sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
             className="object-cover transition duration-700 group-hover:scale-105"
           />
-          <span className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/0 to-ink/0 opacity-70 transition group-hover:opacity-100" />
+          <span className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-70 transition group-hover:opacity-100" />
           <span className="absolute left-1/2 top-1/2 grid size-14 -translate-x-1/2 -translate-y-1/2 scale-75 place-items-center rounded-full bg-snow text-ink opacity-0 transition duration-500 group-hover:scale-100 group-hover:opacity-100">
             <PlayIcon width={22} height={22} className="translate-x-0.5" />
           </span>
           {video.duration && (
-            <span className="absolute bottom-3 right-3 rounded-md bg-ink/85 px-2 py-0.5 text-xs font-semibold tabular-nums">
+            <span className="absolute bottom-3 right-3 rounded-md bg-black/85 px-2 py-0.5 text-xs font-semibold tabular-nums text-white">
               {video.duration}
             </span>
           )}
@@ -79,7 +79,7 @@ export function ShortCard({ short }: { short: Short }) {
       href={shortUrl(short.id)}
       target="_blank"
       rel="noopener noreferrer"
-      className="group relative block aspect-[9/16] w-44 shrink-0 snap-start overflow-hidden rounded-2xl bg-night-2 sm:w-52"
+      className="group relative block aspect-[9/16] w-44 shrink-0 snap-start overflow-hidden rounded-2xl bg-night-2 text-white sm:w-52"
     >
       <Image
         src={thumb(short.id, "hq")}
@@ -88,7 +88,7 @@ export function ShortCard({ short }: { short: Short }) {
         sizes="208px"
         className="object-cover transition duration-700 group-hover:scale-110"
       />
-      <span className="absolute inset-0 bg-gradient-to-t from-ink via-ink/20 to-ink/10" />
+      <span className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-black/10" />
       <span className="absolute right-3 top-3 grid size-8 place-items-center rounded-full bg-white/15 backdrop-blur transition group-hover:bg-snow group-hover:text-ink">
         <PlayIcon width={14} height={14} />
       </span>

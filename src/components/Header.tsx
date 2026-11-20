@@ -93,7 +93,7 @@ export default function Header() {
                 <Link
                   href={l.href}
                   className={`flex items-center justify-between rounded-2xl px-4 py-3.5 font-display text-2xl font-semibold ${
-                    isActive(l.href) ? "bg-white/[0.06] text-moss" : "text-snow"
+                    isActive(l.href) ? "bg-moss/10 text-moss" : "text-snow"
                   }`}
                 >
                   {l.label}

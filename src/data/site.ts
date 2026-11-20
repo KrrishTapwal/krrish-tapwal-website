@@ -8,6 +8,7 @@
 export const site = {
   // Live domain (bina trailing slash ke)
   url: "https://krrishtapwal.space",
+  profileImagePath: "/channel-avatar",
 
   name: "Krrish Tapwal",
   firstName: "Krrish",
@@ -15,8 +16,8 @@ export const site = {
   // Doosre naam jinse log search karte hain — SEO ke liye
   alternateNames: ["Krrish Tapwal", "KRRISH TAPWAL", "Krizz Tapwal", "XploreWithKrrish", "Xplore With Krrish"],
   brand: "XploreWithKrrish",
-  role: "Himachali Explorer & YouTuber",
-  tagline: "Exploring Himachal — treks, temples, rides & real stories from the mountains.",
+  role: "Himachal Explorer",
+  tagline: "Exploring Himachal through its landscapes, heritage, road trips, and stories.",
   location: {
     region: "Himachal Pradesh",
     area: "Sarkaghat, Mandi",
@@ -25,13 +26,13 @@ export const site = {
   },
 
   shortBio:
-    "Krrish Tapwal is a Himachali explorer and the creator of XploreWithKrrish on YouTube — bringing raw, real and cinematic adventures from the heart of the Himalayas.",
+    "Krrish Tapwal is a Himachal-based explorer, Computer Science Engineering professional, and data scientist. Through XploreWithKrrish, he shares thoughtful travel stories, mountain journeys, and the culture of Himachal Pradesh.",
 
   longBio: [
-    "Main hoon Krrish Tapwal — Himachal Pradesh ka ek pahadi banda jo apne camera ke saath un jagahon tak jaata hai jinke baare mein bahut kam log jaante hain. Hidden village trails, pahadon ke upar bane purane mandir, bhooli hui forts aur lambi road trips — yahi meri duniya hai.",
-    "Maine apna YouTube channel XploreWithKrrish 2020 mein shuru kiya tha. Aaj is channel par Himachal ke hidden gems — Kamlah Fort, Kanchana Mata Mandir (Anantpur Garh), Mata Awahdevi Mandir aur Baba Kamlahiya Mandir — ki cinematic journeys hain, saath hi Bengaluru se Himachal tak ki road trip aur Royal Enfield Meteor 350 par mountain rides bhi.",
-    "Camera ke peeche ki zindagi bhi utni hi real hai. Ek lambe gap aur kai rejections ke baad maine apni pehli MIS Executive job paayi — aur woh poori journey bhi maine bina filter ke share ki, taaki jo log usi raaste par hain unhe himmat mile.",
-    "Mera maqsad simple hai: Himachal ki asli khoobsurati, uski aastha aur uske logon ki kahaniyan duniya tak pahunchana — raw, real aur thrilling.",
+    "I am Krrish Tapwal, a Himachal-based explorer, Computer Science Engineering professional, and data scientist. I am drawn to the region's lesser-known village trails, historic temples and forts, mountain roads, and the stories that make each place distinct.",
+    "I started my YouTube channel, XploreWithKrrish, in 2020. It features journeys to places such as Kamlah Fort, Kanchana Mata Temple at Anantpur Garh, Mata Awahdevi Temple, and Baba Kamlahiya Temple, alongside long-distance road trips and rides on my Royal Enfield Meteor 350.",
+    "Alongside my work in technology and data science, I share honest experiences from everyday life and career milestones, including the challenges of finding my first MIS Executive role. I hope these stories offer useful perspective to others navigating a similar path.",
+    "My goal is to introduce more people to Himachal Pradesh's landscapes, heritage, and communities through thoughtful, authentic storytelling.",
   ],
 
   youtube: {
@@ -73,6 +74,8 @@ export const site = {
     "Krrish Tapwal YouTube",
     "Krrish Tapwal Himachal",
     "Krrish Tapwal Sarkaghat",
+    "Krrish Tapwal CSE Engineer",
+    "Krrish Tapwal Data Scientist",
     "Tapwal",
     "Krizz Tapwal",
     "XploreWithKrrish",

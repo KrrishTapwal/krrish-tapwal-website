@@ -17,7 +17,7 @@ export function personSchema() {
     familyName: site.lastName,
     alternateName: site.alternateNames,
     url: site.url,
-    image: `${site.url}/images/krrish-tapwal.jpg`,
+    image: `${site.url}${site.profileImagePath}`,
     description: site.shortBio,
     jobTitle: ["YouTuber", "Content Creator", "Travel Vlogger"],
     nationality: { "@type": "Country", name: site.location.country },
@@ -31,7 +31,7 @@ export function personSchema() {
         addressCountry: site.location.countryCode,
       },
     },
-    knowsAbout: ["Himachal Pradesh travel", "Trekking", "Temples of Himachal", "Travel vlogging", "Motorcycle rides", "Video creation"],
+    knowsAbout: ["Computer Science Engineering", "Data Science", "Himachal Pradesh travel", "Trekking", "Temples of Himachal", "Travel vlogging", "Motorcycle rides", "Video creation"],
     sameAs: sameAs(),
   };
 }

@@ -11,16 +11,16 @@ export default function MountainScene({
     <svg className={className} viewBox="0 0 1440 420" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
       <defs>
         <linearGradient id={`${id}-far`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#3d3d3d" />
-          <stop offset="1" stopColor="#1a1a1a" />
+          <stop offset="0" stopColor="#e9eee9" />
+          <stop offset="1" stopColor="#d7dfd7" />
         </linearGradient>
         <linearGradient id={`${id}-mid`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#262626" />
-          <stop offset="1" stopColor="#121212" />
+          <stop offset="0" stopColor="#d4ddd4" />
+          <stop offset="1" stopColor="#c0ccc0" />
         </linearGradient>
         <linearGradient id={`${id}-near`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#141414" />
-          <stop offset="1" stopColor="#0a0a0a" />
+          <stop offset="0" stopColor="#a9b8aa" />
+          <stop offset="1" stopColor="#8fa291" />
         </linearGradient>
         <linearGradient id={`${id}-snow`} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0" stopColor="#f5f5f4" stopOpacity="0.95" />
@@ -46,7 +46,7 @@ export default function MountainScene({
       />
 
       {/* deodar treeline */}
-      <g fill="#1d3a25" opacity="0.95">
+      <g fill="#356e40" opacity="0.82">
         {Array.from({ length: 36 }).map((_, i) => {
           const x = i * 41 + (i % 3) * 7;
           const h = 26 + ((i * 37) % 22);

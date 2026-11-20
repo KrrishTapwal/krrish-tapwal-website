@@ -1,22 +1,20 @@
 @import "tailwindcss";
 
 /* ============================================================
-   Design tokens — "Monochrome Mountains"
-   Black & white base, thoda sa pahadi green:
-   moss/sage = deodar & pahadi ghaas (sirf accents ke liye),
-   pine = gehra jungle, snow = barf ki chotiyan
+   Design tokens — "Mountain Light"
+   White canvas, charcoal typography, and restrained forest-green accents.
    ============================================================ */
 @theme {
-  --color-ink: #0a0a0a;
-  --color-night: #111111;
-  --color-night-2: #181818;
-  --color-night-3: #242424;
-  --color-line: rgb(255 255 255 / 0.1);
-  --color-snow: #f5f5f4;
-  --color-mist: #a8a8a8;
-  --color-fog: #737373;
-  --color-moss: #7dbe78;
-  --color-sage: #a9d8a2;
+  --color-ink: #ffffff;
+  --color-night: #f8faf8;
+  --color-night-2: #f1f4f1;
+  --color-night-3: #e4e9e4;
+  --color-line: rgb(17 24 39 / 0.12);
+  --color-snow: #111827;
+  --color-mist: #4b5563;
+  --color-fog: #6b7280;
+  --color-moss: #356e40;
+  --color-sage: #376d40;
   --color-pine: #2f5d3a;
   --color-glacier: #d4d4d4;
 
@@ -45,7 +43,7 @@
 
 @layer base {
   html {
-    color-scheme: dark;
+    color-scheme: light;
     scroll-behavior: smooth;
     overflow-x: clip;
     -webkit-tap-highlight-color: transparent;
@@ -124,7 +122,7 @@
   .btn-primary {
     background: var(--color-snow);
     color: var(--color-ink);
-    box-shadow: 0 10px 30px -12px rgb(255 255 255 / 0.35);
+    box-shadow: 0 10px 30px -12px rgb(17 24 39 / 0.25);
   }
   .btn-primary:hover {
     background: var(--color-sage);
@@ -133,19 +131,19 @@
   }
   .btn-ghost {
     border: 1px solid var(--color-line);
-    background: rgb(255 255 255 / 0.03);
+    background: rgb(17 24 39 / 0.02);
     color: var(--color-snow);
     backdrop-filter: blur(8px);
   }
   .btn-ghost:hover {
-    border-color: rgb(255 255 255 / 0.25);
-    background: rgb(255 255 255 / 0.07);
+    border-color: rgb(17 24 39 / 0.25);
+    background: rgb(17 24 39 / 0.05);
     transform: translateY(-2px);
   }
 
   .card {
     border: 1px solid var(--color-line);
-    background: linear-gradient(180deg, rgb(255 255 255 / 0.035), rgb(255 255 255 / 0.01));
+    background: linear-gradient(180deg, rgb(17 24 39 / 0.025), rgb(17 24 39 / 0.01));
     border-radius: 1.5rem;
   }
 

@@ -36,7 +36,7 @@ export const videos: Video[] = [
     id: "xcYFq7LX7Is",
     title: "My First Diwali With Scorpio Classic S11 ❤️ | Diwali Vlog 2026",
     description:
-      "Diwali sirf roshni ka tyohaar nahi — apno ke saath bitaye pal hain. Ghar, family aur nayi Scorpio Classic S11 ke saath pehli Diwali ka vlog.",
+      "A Diwali celebration at home with family and the new Scorpio Classic S11, capturing the moments that make the festival special.",
     publishedAt: "2026-11-08T18:30:06-08:00",
     duration: "13:38",
     views: 150,
@@ -46,7 +46,7 @@ export const videos: Video[] = [
     id: "HAmoqYBhXBA",
     title: "Mahindra Scorpio Classic S11 Top — The Real King of Roads 👑",
     description:
-      "Mahindra Scorpio Classic S11 Top variant ka full experience — design, power aur pahadi roads par road presence.",
+      "A closer look at the Mahindra Scorpio Classic S11 Top variant, from its design and performance to its presence on mountain roads.",
     publishedAt: "2026-10-12T00:26:01-07:00",
     duration: "12:09",
     views: 155,
@@ -56,7 +56,7 @@ export const videos: Video[] = [
     id: "4sH-hzEphD4",
     title: "How I Got My First MIS Job After a Gap | My Real Journey",
     description:
-      "Rejection, doubt aur ek lamba gap — phir pehli MIS Executive job. Ek real, bina filter ki journey un sab ke liye jo abhi struggle kar rahe hain.",
+      "An honest account of navigating rejection and a career gap before landing my first MIS Executive role, for anyone facing a similar challenge.",
     publishedAt: "2025-12-07T09:28:12-08:00",
     duration: "5:52",
     views: 64,
@@ -66,7 +66,7 @@ export const videos: Video[] = [
     id: "sY2h1Gsx_ZI",
     title: "Morning Ride in the Mountains 🌄 | Meteor 350 Fireball Black | Royal Enfield Vibes",
     description:
-      "Royal Enfield Meteor 350 Fireball Black par ek shaant pahadi morning ride — 349cc engine ke saath har chadhaai aasaan.",
+      "A peaceful morning ride through the mountains on the Royal Enfield Meteor 350 Fireball Black.",
     publishedAt: "2025-10-30T01:59:43-07:00",
     duration: "7:38",
     views: 264,
@@ -86,7 +86,7 @@ export const videos: Video[] = [
     id: "QHAmMv4mdRE",
     title: "Kanchana Mata Temple | Anantpur Garh | Sarkaghat | Himachal Pradesh",
     description:
-      "Badalon ke upar, Sarkaghat ki pahadiyon mein chhupa Kanchana Mata Mandir — Anantpur Garh tak ki poori yatra.",
+      "A journey to Kanchana Mata Temple at Anantpur Garh, set high in the hills above Sarkaghat.",
     publishedAt: "2025-07-07T07:30:19-07:00",
     duration: "17:35",
     views: 229,
@@ -108,7 +108,7 @@ export const videos: Video[] = [
     id: "sbHuha-IWzY",
     title: "Kamlah Fort | Kamlahgarh | Baba Kamlahiya Mandir | Mandi, Himachal Pradesh",
     description:
-      "Himachal ke hidden gems mein se ek — Kamlah Fort (Kamlahgarh) aur Baba Kamlahiya Mandir, Mandi district.",
+      "Explore Kamlah Fort (Kamlahgarh) and Baba Kamlahiya Temple, two historic landmarks in Mandi district.",
     publishedAt: "2025-06-21T07:47:11-07:00",
     duration: "14:18",
     views: 392,
@@ -119,7 +119,7 @@ export const videos: Video[] = [
     id: "Ml16dPjXUME",
     title: "Baba Kamlahiya Mandir Chandpur — Trek 1",
     description:
-      "Himachal Pradesh ka ek adbhut bhakti sthal — Chandpur ka Baba Kamlahiya Mandir, do sundar viewpoints ke saath.",
+      "Visit Baba Kamlahiya Temple in Chandpur and enjoy two scenic viewpoints along the trek.",
     publishedAt: "2025-06-08T20:08:55-07:00",
     duration: "13:32",
     views: 296,
@@ -130,7 +130,7 @@ export const videos: Video[] = [
     id: "JBEH-ZM59To",
     title: "Bengaluru to Himachal Pradesh in 2 Days — Part 2",
     description:
-      "Chandigarh se aage, Himachal ke dil ki taraf — mountain road trip ka Part 2.",
+      "Part 2 of the road trip from Chandigarh into the heart of Himachal Pradesh.",
     publishedAt: "2025-06-05T10:04:46-07:00",
     duration: "5:51",
     views: 121,
@@ -140,7 +140,7 @@ export const videos: Video[] = [
     id: "Zt6EH13HBM8",
     title: "Bengaluru to Himachal Pradesh in 2 Days — Part 1",
     description:
-      "Bengaluru se Himachal ke pahadon tak ka safar, Chandigarh mein ek chhote stay ke saath.",
+      "The journey from Bengaluru to Himachal Pradesh, including a short stop in Chandigarh.",
     publishedAt: "2025-06-03T06:12:53-07:00",
     duration: "11:01",
     views: 176,
@@ -162,7 +162,7 @@ export const shorts: Short[] = [
   { id: "TkZFTEAF-mw", title: "Not Kasol, Not Tosh. Just Himachal’s Anant Garh", publishedAt: "2025-07-02T21:57:34-07:00", views: 4100 },
   { id: "tw4ZDho0-OQ", title: "Mata Awahdevi Mandir | Baba Balak Nath Temple", publishedAt: "2025-06-30T07:30:41-07:00", views: 660 },
   { id: "z5TH_VFqlQ8", title: "🏰 Kamlah Fort, Kamlahgarh — Himachal Pradesh", publishedAt: "2025-06-21T16:45:01-07:00", views: 1700 },
-  { id: "nTN2vw5j7VY", title: "Ek aisa mandir jahan har saal hota hai vishal bhandara!", publishedAt: "2025-06-09T02:02:29-07:00", views: 778 },
+  { id: "nTN2vw5j7VY", title: "A temple that hosts a grand annual community feast", publishedAt: "2025-06-09T02:02:29-07:00", views: 778 },
 ];
 
 /** Places explored — Home & About pages par dikhte hain */
@@ -170,25 +170,25 @@ export const places = [
   {
     name: "Kamlah Fort",
     area: "Kamlahgarh, Mandi",
-    note: "Pahadi chotti par bana sadiyon purana qila — Himachal ke sabse underrated forts mein se ek.",
+    note: "A centuries-old fort perched on a mountain ridge, among Himachal Pradesh's most overlooked historic sites.",
     videoId: "sbHuha-IWzY",
   },
   {
     name: "Kanchana Mata Mandir",
     area: "Anantpur Garh, Sarkaghat",
-    note: "Badalon ke upar chhupa mandir. Kasol nahi, Tosh nahi — bas Himachal ka Anant Garh.",
+    note: "A peaceful temple above the clouds at Anantpur Garh, in the hills near Sarkaghat.",
     videoId: "QHAmMv4mdRE",
   },
   {
     name: "Mata Awahdevi Mandir",
     area: "Awahdevi",
-    note: "Maa Awahdevi aur Baba Balak Nath Ji ka pavitra sthal — ek hidden spiritual gem.",
+    note: "A revered spiritual site dedicated to Mata Awahdevi and Baba Balak Nath.",
     videoId: "49GLZkMXvqE",
   },
   {
     name: "Baba Kamlahiya Mandir",
     area: "Chandpur",
-    note: "Do sundar viewpoints aur har saal hone wala vishal bhandara — Trek #1 yahin se.",
+    note: "A scenic trek with two viewpoints and an annual community gathering.",
     videoId: "Ml16dPjXUME",
   },
 ] as const;
@@ -198,7 +198,7 @@ export const garage = [
   {
     name: "Royal Enfield Meteor 350",
     variant: "Fireball Black",
-    note: "349cc cruiser — pahadi morning rides ka saathi.",
+    note: "A 349cc cruiser for relaxed morning rides through the mountains.",
     videoId: "sY2h1Gsx_ZI",
   },
   {
@@ -211,11 +211,11 @@ export const garage = [
 
 /** Journey timeline */
 export const timeline = [
-  { date: "Mar 2020", title: "XploreWithKrrish ki shuruaat", text: "YouTube channel shuru kiya — pahadon ki kahaniyan sunane ke liye." },
-  { date: "Jun 2025", title: "Bengaluru → Himachal in 2 Days", text: "Desh ke ek kone se doosre kone tak — Chandigarh hote hue ghar, pahadon mein." },
-  { date: "Jun–Jul 2025", title: "Hidden Himachal series", text: "Kamlah Fort, Baba Kamlahiya, Awahdevi aur Kanchana Mata — Mandi ke hidden gems." },
-  { date: "Oct 2025", title: "Meteor 350 Fireball Black", text: "Nayi Royal Enfield — aur mountain rides ka naya chapter." },
-  { date: "Dec 2025", title: "Pehli MIS job ki kahani", text: "Gap aur rejections ke baad pehli MIS Executive job — real journey share ki." },
-  { date: "Oct 2026", title: "Scorpio Classic S11", text: "Garage mein aaya 'King of Roads' — aur shorts ne 35K+ views cross kiye." },
-  { date: "Nov 2026", title: "Diwali with Scorpio", text: "Family, ghar aur nayi gaadi ke saath pehli Diwali." },
+  { date: "Mar 2020", title: "Launching XploreWithKrrish", text: "Started a YouTube channel to share journeys and stories from Himachal." },
+  { date: "Jun 2025", title: "Bengaluru → Himachal in 2 Days", text: "A cross-country road trip from Bengaluru to home in the mountains via Chandigarh." },
+  { date: "Jun–Jul 2025", title: "Hidden Himachal series", text: "Explored Kamlah Fort, Baba Kamlahiya, Awahdevi, and Kanchana Mata in Mandi." },
+  { date: "Oct 2025", title: "Meteor 350 Fireball Black", text: "A new Royal Enfield and a new chapter of mountain rides." },
+  { date: "Dec 2025", title: "My first MIS role", text: "Shared the journey to my first MIS Executive role after a career gap and rejections." },
+  { date: "Oct 2026", title: "Scorpio Classic S11", text: "Welcomed the Scorpio Classic S11 and crossed 35K views on a Short." },
+  { date: "Nov 2026", title: "Diwali with Scorpio", text: "Celebrated Diwali at home with family and the new vehicle." },
 ] as const;

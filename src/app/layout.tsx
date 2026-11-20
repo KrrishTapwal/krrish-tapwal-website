@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     default: title,
     template: `%s | ${site.name}`,
   },
-  description: `${site.name} (Krizz Tapwal) — Himachali explorer & creator of ${site.brand} on YouTube. Treks, temples, hidden gems of Sarkaghat & Mandi, Royal Enfield rides and real stories from Himachal Pradesh.`,
+  description: `${site.name} (Krizz Tapwal) is a Himachal-based explorer, Computer Science Engineering professional, and data scientist. Discover his travel stories, historic sites, and mountain journeys on ${site.brand}.`,
   applicationName: site.name,
   keywords: [...site.keywords],
   authors: [{ name: site.name, url: site.url }],
@@ -61,8 +61,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0a0a0a",
-  colorScheme: "dark",
+  themeColor: "#ffffff",
+  colorScheme: "light",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

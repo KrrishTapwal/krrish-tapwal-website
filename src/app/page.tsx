@@ -12,15 +12,15 @@ import { site } from "@/data/site";
 import { garage, places, timeline } from "@/data/videos";
 import { compactNumber, formatDate } from "@/lib/format";
 import { graph, profilePageSchema, videoSchema } from "@/lib/schema";
-import { getChannelContent, getChannelStats, thumb, watchUrl } from "@/lib/youtube";
+import { getChannelContent, getChannelProfileImage, getChannelStats, thumb, watchUrl } from "@/lib/youtube";
 
 // Har 15 minute mein YouTube se nayi videos + stats refresh (ISR)
 export const revalidate = 900;
 
 export const metadata: Metadata = {
-  title: "Krrish Tapwal — Himachali Explorer & XploreWithKrrish YouTuber",
+  title: "Himachal Explorer, CSE Engineer & Data Scientist",
   description:
-    "Explore Himachal with Krrish Tapwal — hidden treks, ancient temples, forts, Royal Enfield rides and real travel stories on XploreWithKrrish.",
+    "Explore Himachal with Krrish Tapwal, a CSE engineer and data scientist — discover hidden trails, historic temples, mountain journeys, and stories on XploreWithKrrish.",
   alternates: { canonical: "/" },
   openGraph: {
     type: "profile",
@@ -37,16 +37,16 @@ export const metadata: Metadata = {
 };
 
 const pillars = [
-  { Icon: MountainIcon, title: "Treks & Trails", text: "Gaon ki pagdandiyon se pahadon ki chotiyon tak — har trek ek nayi kahani." },
-  { Icon: TempleIcon, title: "Temples & Hidden Gems", text: "Himachal ke woh mandir aur qile jo Google Maps par bhi mushkil se milte hain." },
-  { Icon: BikeIcon, title: "Rides & Road Trips", text: "Meteor 350 ki morning rides aur Bengaluru se Himachal jaisi lambi road trips." },
-  { Icon: SparkIcon, title: "Real Life Stories", text: "Job, struggle, family aur tyohaar — camera ke peeche ki asli zindagi." },
+  { Icon: MountainIcon, title: "Treks & Trails", text: "From village paths to mountain summits, every trail offers a new perspective." },
+  { Icon: TempleIcon, title: "Temples & Hidden Gems", text: "Discover historic temples and forts across Himachal Pradesh." },
+  { Icon: BikeIcon, title: "Rides & Road Trips", text: "Mountain rides on the Meteor 350 and long-distance road trips across India." },
+  { Icon: SparkIcon, title: "Life & Stories", text: "Honest reflections on work, personal growth, family, and life in Himachal." },
 ];
 
 const marqueeItems = ["Sarkaghat", "Mandi", "Kamlah Fort", "Kanchana Mata", "Anantpur Garh", "Awahdevi", "Chandpur", "Baba Kamlahiya", "Himachal Pradesh"];
 
 export default async function HomePage() {
-  const [{ videos, shorts }, live] = await Promise.all([getChannelContent(), getChannelStats()]);
+  const [{ videos, shorts }, live, profileImage] = await Promise.all([getChannelContent(), getChannelStats(), getChannelProfileImage()]);
   const [featured, ...rest] = videos;
   const latest = rest.slice(0, 6);
   const totalShortViews = shorts.reduce((s, x) => s + (x.views ?? 0), 0);
@@ -65,15 +65,6 @@ export default async function HomePage() {
       {/* ================= HERO ================= */}
       <section className="grain relative isolate flex min-h-[100svh] items-center overflow-hidden pb-40 pt-28 md:pt-32" aria-labelledby="hero-title">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(60%_50%_at_80%_10%,rgb(125_190_120/0.13),transparent_70%),radial-gradient(50%_40%_at_10%_20%,rgb(255_255_255/0.07),transparent_70%)]" />
-        <div className="absolute inset-0 -z-10" aria-hidden="true">
-          {Array.from({ length: 28 }).map((_, i) => (
-            <span
-              key={i}
-              className="absolute size-[2px] animate-twinkle rounded-full bg-snow"
-              style={{ left: `${(i * 37) % 100}%`, top: `${(i * 23) % 45}%`, animationDelay: `${(i % 7) * 0.6}s` }}
-            />
-          ))}
-        </div>
         <MountainScene className="absolute inset-x-0 bottom-0 -z-10 h-[46%] w-full" />
 
         <div className="container-x grid items-center gap-14 lg:grid-cols-[1.25fr_1fr]">
@@ -90,9 +81,10 @@ export default async function HomePage() {
             </Reveal>
             <Reveal delay={160}>
               <p className="mt-7 max-w-xl text-lg leading-relaxed text-mist sm:text-xl">
-                Himachal Pradesh ka pahadi explorer. Hidden trails, purane mandir, bhoole hue qile aur pahadi roads par rides —{" "}
-                <span className="text-snow">raw, real aur thrilling</span> kahaniyan, {site.brand} par.
+                Exploring Himachal Pradesh through its hidden trails, historic temples, forgotten forts, and mountain roads — authentic stories and journeys from{" "}
+                <span className="text-snow">XploreWithKrrish.</span>
               </p>
+              <p className="mt-3 text-sm font-medium text-moss">Computer Science Engineer · Data Scientist</p>
             </Reveal>
             <Reveal delay={240} className="mt-9 flex flex-wrap gap-3">
               <a href={site.youtube.subscribeUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
@@ -118,19 +110,19 @@ export default async function HomePage() {
             <div className="absolute -inset-6 -z-10 rounded-[2.5rem] bg-white/10 blur-3xl" />
             <div className="relative aspect-[4/5] rotate-[1.5deg] overflow-hidden rounded-[2rem] border border-white/10 shadow-2xl shadow-black/60 transition duration-700 hover:rotate-0">
               <Image
-                src="/images/krrish-tapwal.jpg"
-                alt="Krrish Tapwal standing above a Himalayan lake in Himachal Pradesh"
+                src={profileImage}
+                alt="Current YouTube profile photo of Krrish Tapwal"
                 fill
                 priority
                 quality={90}
                 sizes="(min-width: 1024px) 40vw, 90vw"
                 className="object-cover object-[72%_center]"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
               <div className="absolute inset-x-5 bottom-5 flex items-end justify-between gap-3">
                 <div>
-                  <p className="font-display text-xl font-bold">{site.name}</p>
-                  <p className="text-sm text-mist">{site.youtube.handle}</p>
+                  <p className="font-display text-xl font-bold text-white">{site.name}</p>
+                  <p className="text-sm text-white/85">{site.youtube.handle}</p>
                 </div>
                 <span className="inline-flex items-center gap-1.5 rounded-full bg-ink/70 px-3 py-1.5 text-xs font-medium backdrop-blur">
                   <MapPinIcon width={14} height={14} className="text-moss" /> {site.location.region}
@@ -166,12 +158,12 @@ export default async function HomePage() {
           <Reveal>
             <p className="eyebrow">Who is Krrish Tapwal?</p>
             <h2 id="about-title" className="mt-4 text-4xl font-bold leading-[1.05] sm:text-5xl">
-              Ek pahadi banda, ek camera, aur <span className="text-moss">Himachal ki anginat kahaniyan.</span>
+              Exploring Himachal and sharing <span className="text-moss">the stories behind its places.</span>
             </h2>
             <p className="mt-6 text-lg leading-relaxed text-mist">{site.longBio[0]}</p>
             <p className="mt-4 text-lg leading-relaxed text-mist">{site.longBio[1]}</p>
             <Link href="/about" className="btn btn-ghost mt-8">
-              Meri poori kahani <ArrowRightIcon width={18} height={18} />
+              More about me <ArrowRightIcon width={18} height={18} />
             </Link>
           </Reveal>
           <div className="grid gap-4 sm:grid-cols-2">
@@ -193,7 +185,7 @@ export default async function HomePage() {
         <SectionHeading
           eyebrow="Latest on YouTube"
           title={<span id="latest-title">Fresh from the mountains</span>}
-          intro="Seedha website par dekho — ya YouTube par jaa kar like, comment aur subscribe karo."
+          intro="Watch here or visit YouTube to like, comment, and subscribe."
           action={{ href: "/videos", label: "All videos" }}
         />
         {featured && (
@@ -228,7 +220,7 @@ export default async function HomePage() {
           <SectionHeading
             eyebrow="Shorts"
             title={<span id="shorts-title">60 seconds of Himachal</span>}
-            intro={`${compactNumber(totalShortViews)}+ views across shorts — Scorpio, Royal Enfield, mandir aur monsoon.`}
+            intro={`${compactNumber(totalShortViews)}+ views across Shorts featuring the Scorpio, Royal Enfield, temples, and monsoon landscapes.`}
             action={{ href: "/videos#shorts", label: "All shorts" }}
           />
         </div>
@@ -243,21 +235,21 @@ export default async function HomePage() {
       <section className="container-x py-20 md:py-28" aria-labelledby="places-title">
         <SectionHeading
           eyebrow="Hidden Himachal"
-          title={<span id="places-title">Jagahein jo maine explore ki</span>}
-          intro="Mandi aur Sarkaghat ke woh hidden gems jo har traveller ki list mein hone chahiye."
+          title={<span id="places-title">Places I have explored</span>}
+          intro="Discover remarkable places across Mandi and Sarkaghat, from historic sites to local landmarks."
         />
         <div className="grid gap-5 md:grid-cols-2">
           {places.map((p, i) => (
             <Reveal key={p.name} delay={(i % 2) * 100} as="article" className="group relative min-h-80 overflow-hidden rounded-3xl border border-line">
               <Image src={thumb(p.videoId, "hq")} alt={`${p.name}, ${p.area} — Himachal Pradesh`} fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover transition duration-1000 group-hover:scale-105" />
-              <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/60 to-ink/10" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/10" />
               <div className="relative flex h-full min-h-80 flex-col justify-end p-7">
                 <span className="font-display text-sm font-bold text-moss">0{i + 1}</span>
                 <h3 className="mt-1 font-display text-3xl font-bold">{p.name}</h3>
-                <p className="mt-1 inline-flex items-center gap-1.5 text-sm text-mist">
+                <p className="mt-1 inline-flex items-center gap-1.5 text-sm text-white/85">
                   <MapPinIcon width={14} height={14} /> {p.area}
                 </p>
-                <p className="mt-3 max-w-md text-snow/85">{p.note}</p>
+                <p className="mt-3 max-w-md text-white/90">{p.note}</p>
                 <a href={watchUrl(p.videoId)} target="_blank" rel="noopener noreferrer" className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-sage transition hover:gap-3">
                   Watch the journey <ArrowRightIcon width={16} height={16} />
                 </a>
@@ -292,7 +284,7 @@ export default async function HomePage() {
           </div>
 
           <div>
-            <SectionHeading eyebrow="The Journey" title="Ab tak ka safar" />
+            <SectionHeading eyebrow="The Journey" title="The journey so far" />
             <ol className="relative space-y-8 border-l border-line pl-8">
               {timeline.map((t, i) => (
                 <Reveal key={t.title} delay={i * 60} as="li" className="relative">
@@ -311,8 +303,8 @@ export default async function HomePage() {
       <section className="container-x py-20 md:py-28" aria-labelledby="shop-title">
         <SectionHeading
           eyebrow="Krrish Store · Coming soon"
-          title={<span id="shop-title">Pahadon se, seedha aapke ghar</span>}
-          intro="XploreWithKrrish merch, pahadi desi ghee aur Himachali goodies — jaldi aa rahe hain."
+          title={<span id="shop-title">Himachal, delivered to your home</span>}
+          intro="XploreWithKrrish merchandise and locally sourced Himachali products are coming soon."
           action={{ href: "/shop", label: "Visit the store" }}
         />
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -327,8 +319,8 @@ export default async function HomePage() {
         <Reveal className="grain relative isolate overflow-hidden rounded-[2rem] border border-line bg-gradient-to-br from-pine/40 via-night-2 to-night px-6 py-16 text-center sm:px-12 md:py-24">
           <MountainScene className="absolute inset-x-0 bottom-0 -z-10 h-1/2 w-full opacity-60" variant="footer" />
           <p className="eyebrow justify-center">Join the journey</p>
-          <h2 className="mx-auto mt-5 max-w-3xl text-4xl font-bold leading-[1.05] sm:text-6xl">Agla adventure aapke saath ho?</h2>
-          <p className="mx-auto mt-5 max-w-xl text-lg text-mist">Subscribe karo, bell icon dabao — aur Himachal ki har nayi kahani sabse pehle dekho.</p>
+          <h2 className="mx-auto mt-5 max-w-3xl text-4xl font-bold leading-[1.05] sm:text-6xl">Join the next adventure</h2>
+          <p className="mx-auto mt-5 max-w-xl text-lg text-mist">Subscribe for new stories, journeys, and discoveries from Himachal Pradesh.</p>
           <a href={site.youtube.subscribeUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary mt-9 !px-7 !py-4 text-base">
             <YouTubeIcon /> Subscribe to {site.brand}
           </a>
