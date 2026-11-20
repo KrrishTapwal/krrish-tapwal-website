@@ -321,7 +321,7 @@ export default async function HomePage() {
           <p className="eyebrow justify-center">Join the journey</p>
           <h2 className="mx-auto mt-5 max-w-3xl text-4xl font-bold leading-[1.05] sm:text-6xl">Join the next adventure</h2>
           <p className="mx-auto mt-5 max-w-xl text-lg text-mist">Subscribe for new stories, journeys, and discoveries from Himachal Pradesh.</p>
-          <a href={site.youtube.subscribeUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary mt-9 !px-7 !py-4 text-base">
+          <a href={site.youtube.subscribeUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary mt-9 w-full max-w-full whitespace-normal !px-4 !py-4 text-base sm:w-auto sm:!px-7">
             <YouTubeIcon /> Subscribe to {site.brand}
           </a>
         </Reveal>

@@ -84,7 +84,9 @@ export default function Header() {
       {/* Mobile menu */}
       <div
         id="mobile-menu"
-        className={`overflow-hidden transition-[max-height,opacity] duration-500 md:hidden ${open ? "max-h-[28rem] opacity-100" : "max-h-0 opacity-0"}`}
+        className={`overflow-hidden transition-[max-height,opacity] duration-500 md:hidden ${
+          open ? "max-h-[28rem] border-b border-line bg-ink opacity-100" : "max-h-0 opacity-0"
+        }`}
       >
         <nav aria-label="Mobile" className="container-x pb-6 pt-2">
           <ul className="space-y-1">
