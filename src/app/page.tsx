@@ -1,16 +1,15 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import MountainScene from "@/components/MountainScene";
 import ProductCard from "@/components/ProductCard";
 import Reveal from "@/components/Reveal";
 import YouTubeEmbed from "@/components/YouTubeEmbed";
-import { ArrowRightIcon, ArrowUpRightIcon, BikeIcon, MapPinIcon, MountainIcon, PlayIcon, SparkIcon, TempleIcon, YouTubeIcon } from "@/components/icons";
-import { JsonLd, SectionHeading, ShortCard, VideoCard } from "@/components/ui";
+import { PlayIcon } from "@/components/icons";
+import { JsonLd, SectionTitle, ShortCard, VideoTile } from "@/components/ui";
 import { products } from "@/data/shop";
 import { site } from "@/data/site";
-import { garage, places, timeline } from "@/data/videos";
-import { compactNumber, formatDate } from "@/lib/format";
+import { places } from "@/data/videos";
+import { compactNumber } from "@/lib/format";
 import { graph, profilePageSchema, videoSchema } from "@/lib/schema";
 import { getChannelContent, getChannelProfileImage, getChannelStats, thumb, watchUrl } from "@/lib/youtube";
 
@@ -26,8 +25,7 @@ export const metadata: Metadata = {
     type: "profile",
     url: "/",
     title: "Krrish Tapwal — Himachal Travel Vlogs & Adventures",
-    description:
-      "Hidden trails, sacred temples, old forts and mountain rides across Himachal Pradesh with XploreWithKrrish.",
+    description: "Hidden trails, sacred temples, old forts and mountain rides across Himachal Pradesh with XploreWithKrrish.",
   },
   twitter: {
     card: "summary_large_image",
@@ -36,26 +34,29 @@ export const metadata: Metadata = {
   },
 };
 
-const pillars = [
-  { Icon: MountainIcon, title: "Treks & Trails", text: "From village paths to mountain summits, every trail offers a new perspective." },
-  { Icon: TempleIcon, title: "Temples & Hidden Gems", text: "Discover historic temples and forts across Himachal Pradesh." },
-  { Icon: BikeIcon, title: "Rides & Road Trips", text: "Mountain rides on the Meteor 350 and long-distance road trips across India." },
-  { Icon: SparkIcon, title: "Life & Stories", text: "Honest reflections on work, personal growth, family, and life in Himachal." },
+/** Gallery photos (video thumbnails) with a backdrop colour that shows while loading */
+const galleryShots = [
+  { id: places[0].videoId, label: places[0].name, bg: "bg-teal" },
+  { id: places[1].videoId, label: places[1].name, bg: "bg-coral" },
+  { id: "sY2h1Gsx_ZI", label: "Morning ride, Meteor 350", bg: "bg-teal" },
+  { id: "xcYFq7LX7Is", label: "Diwali at home", bg: "bg-leaf" },
+  { id: places[2].videoId, label: places[2].name, bg: "bg-violet" },
+  { id: "4sH-hzEphD4", label: "My first MIS role", bg: "bg-mustard" },
+  { id: places[3].videoId, label: places[3].name, bg: "bg-mustard" },
 ];
-
-const marqueeItems = ["Sarkaghat", "Mandi", "Kamlah Fort", "Kanchana Mata", "Anantpur Garh", "Awahdevi", "Chandpur", "Baba Kamlahiya", "Himachal Pradesh"];
 
 export default async function HomePage() {
   const [{ videos, shorts }, live, profileImage] = await Promise.all([getChannelContent(), getChannelStats(), getChannelProfileImage()]);
   const [featured, ...rest] = videos;
-  const latest = rest.slice(0, 6);
-  const totalShortViews = shorts.reduce((s, x) => s + (x.views ?? 0), 0);
+  const strip = rest.slice(0, 4);
+  const instaHandle = site.socials.instagram ? `@${site.socials.instagram.replace(/\/+$/, "").split("/").pop()}` : site.youtube.handle;
+  const followHref = site.socials.instagram || site.youtube.subscribeUrl;
 
   const stats = [
-    { value: compactNumber(live.views), label: "Channel views" },
+    { value: compactNumber(live.views), label: "Views" },
     { value: compactNumber(live.subscribers), label: "Subscribers" },
-    { value: `${live.videos}+`, label: "Videos & shorts" },
-    { value: `${site.stats.since}`, label: "Creating since" },
+    { value: `${live.videos}+`, label: "Uploads" },
+    { value: `${site.stats.since}`, label: "Since" },
   ];
 
   return (
@@ -63,269 +64,174 @@ export default async function HomePage() {
       <JsonLd data={graph(profilePageSchema("/", `${site.name} — Official Website`), ...videos.slice(0, 6).map(videoSchema))} />
 
       {/* ================= HERO ================= */}
-      <section className="grain relative isolate flex min-h-[100svh] items-center overflow-hidden pb-40 pt-28 md:pt-32" aria-labelledby="hero-title">
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(60%_50%_at_80%_10%,rgb(125_190_120/0.13),transparent_70%),radial-gradient(50%_40%_at_10%_20%,rgb(255_255_255/0.07),transparent_70%)]" />
-        <MountainScene className="absolute inset-x-0 bottom-0 -z-10 h-[46%] w-full" />
-
-        <div className="container-x grid items-center gap-14 lg:grid-cols-[1.25fr_1fr]">
-          <div>
-            <Reveal>
-              <p className="eyebrow">{site.role}</p>
-            </Reveal>
-            <Reveal delay={80}>
-              <h1 id="hero-title" className="mt-6 text-[clamp(3.6rem,12vw,8.5rem)] font-extrabold leading-[0.88] tracking-[-0.045em]">
-                Krrish
-                <br />
-                <span className="text-gradient">Tapwal</span>
-              </h1>
-            </Reveal>
-            <Reveal delay={160}>
-              <p className="mt-7 max-w-xl text-lg leading-relaxed text-mist sm:text-xl">
-                Exploring Himachal Pradesh through its hidden trails, historic temples, forgotten forts, and mountain roads — authentic stories and journeys from{" "}
-                <span className="text-snow">XploreWithKrrish.</span>
-              </p>
-              <p className="mt-3 text-sm font-medium text-moss">Computer Science Engineer · Data Scientist</p>
-            </Reveal>
-            <Reveal delay={240} className="mt-9 flex flex-wrap gap-3">
-              <a href={site.youtube.subscribeUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
-                <YouTubeIcon /> Subscribe on YouTube
-              </a>
-              <Link href="/videos" className="btn btn-ghost">
-                <PlayIcon width={16} height={16} /> Watch videos
-              </Link>
-            </Reveal>
-            <Reveal delay={320}>
-              <dl className="mt-12 grid max-w-xl grid-cols-2 gap-x-6 gap-y-6 border-t border-line pt-8 sm:grid-cols-4">
-                {stats.map((s) => (
-                  <div key={s.label}>
-                    <dt className="text-xs text-fog">{s.label}</dt>
-                    <dd className="mt-1 font-display text-3xl font-bold tabular-nums">{s.value}</dd>
-                  </div>
-                ))}
-              </dl>
-            </Reveal>
-          </div>
-
-          <Reveal delay={200} className="relative mx-auto w-full max-w-md lg:max-w-none">
-            <div className="absolute -inset-6 -z-10 rounded-[2.5rem] bg-white/10 blur-3xl" />
-            <div className="relative aspect-[4/5] rotate-[1.5deg] overflow-hidden rounded-[2rem] border border-white/10 shadow-2xl shadow-black/60 transition duration-700 hover:rotate-0">
+      <section className="bg-[linear-gradient(to_bottom,var(--color-paper)_0,var(--color-paper)_58%,var(--color-coral)_58%)]" aria-labelledby="hero-title">
+        <div className="container-x">
+          <div className="relative grid overflow-hidden bg-[radial-gradient(70%_80%_at_62%_30%,#4a4a4a_0%,#303030_55%,#262626_100%)] text-white lg:min-h-[38rem] lg:grid-cols-[1fr_1.15fr]">
+            {/* Photo */}
+            <div className="relative aspect-[4/3] lg:order-2 lg:aspect-auto">
               <Image
-                src={profileImage}
-                alt="Current YouTube profile photo of Krrish Tapwal"
+                src="/images/krrish-tapwal.jpg"
+                alt={`${site.name} standing above a Himalayan lake in Himachal Pradesh`}
                 fill
                 priority
                 quality={90}
-                sizes="(min-width: 1024px) 40vw, 90vw"
-                className="object-cover object-[72%_center]"
+                sizes="(min-width: 1024px) 55vw, 100vw"
+                className="object-cover object-[78%_35%] [mask-image:linear-gradient(to_top,transparent,#000_35%)] lg:[mask-image:linear-gradient(to_right,transparent,#000_30%)]"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-              <div className="absolute inset-x-5 bottom-5 flex items-end justify-between gap-3">
-                <div>
-                  <p className="font-display text-xl font-bold text-white">{site.name}</p>
-                  <p className="text-sm text-white/85">{site.youtube.handle}</p>
-                </div>
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-ink/70 px-3 py-1.5 text-xs font-medium backdrop-blur">
-                  <MapPinIcon width={14} height={14} className="text-moss" /> {site.location.region}
-                </span>
-              </div>
             </div>
-            <div className="absolute -left-4 top-10 hidden animate-float rounded-2xl border border-line bg-night/90 px-4 py-3 shadow-xl backdrop-blur sm:block">
-              <p className="text-xs text-fog">Top short</p>
-              <p className="font-display text-xl font-bold text-sage">35K+ views</p>
+
+            {/* Copy */}
+            <div className="relative z-10 flex flex-col justify-center px-6 pb-12 pt-2 sm:px-10 lg:order-1 lg:py-20 lg:pl-20 lg:pr-0">
+              <Reveal>
+                <h1 id="hero-title" className="text-[clamp(3rem,10vw,5.9rem)] font-bold uppercase leading-[0.95] tracking-tight">
+                  {site.firstName}
+                  <br />
+                  {site.lastName}
+                </h1>
+              </Reveal>
+              <Reveal delay={80}>
+                <p className="mt-6 text-2xl font-semibold text-coral sm:text-[2.1rem]">{site.role}</p>
+                <p className="mt-2 text-sm font-medium tracking-wide text-white/70">Computer Science Engineer · Data Scientist</p>
+              </Reveal>
+              <Reveal delay={140}>
+                <p className="mt-6 max-w-sm text-[0.95rem] font-extralight leading-relaxed text-white/95">
+                  Field notes from Himachal Pradesh — hidden trails, historic temples, forgotten forts, and the mountain roads in between.
+                </p>
+              </Reveal>
+              <Reveal delay={200} className="mt-9">
+                <a href="#videos" className="btn btn-coral !px-8">
+                  Watch Me <PlayIcon width={14} height={14} />
+                </a>
+              </Reveal>
             </div>
-            <div className="absolute -right-3 bottom-24 hidden animate-float rounded-2xl border border-line bg-night/90 px-4 py-3 shadow-xl backdrop-blur [animation-delay:1.5s] sm:block">
-              <p className="text-xs text-fog">Shorts views</p>
-              <p className="font-display text-xl font-bold">{compactNumber(totalShortViews)}+</p>
-            </div>
-          </Reveal>
+          </div>
         </div>
       </section>
 
-      {/* ================= MARQUEE ================= */}
-      <div className="relative overflow-hidden border-y border-line bg-night py-5 [mask-image:linear-gradient(90deg,transparent,#000_8%,#000_92%,transparent)]" aria-hidden="true">
-        <div className="flex w-max animate-marquee gap-10 whitespace-nowrap font-display text-2xl font-semibold text-fog sm:text-3xl">
-          {[...marqueeItems, ...marqueeItems].map((m, i) => (
-            <span key={i} className="flex items-center gap-10">
-              {m} <span className="text-moss">✦</span>
-            </span>
-          ))}
-        </div>
-      </div>
+      {/* ================= THIS IS ME (coral band) ================= */}
+      <section className="overflow-hidden bg-coral text-white" aria-labelledby="about-title">
+        <div className="container-x grid items-end gap-8 pt-16 md:pt-24 lg:grid-cols-[1fr_1.3fr_1fr] lg:gap-10">
+          <div className="duotone relative order-2 hidden aspect-[3/4] lg:order-1 lg:block">
+            <Image src={profileImage} alt={`Portrait of ${site.name}`} fill sizes="25vw" className="object-cover object-top" />
+          </div>
 
-      {/* ================= ABOUT TEASER ================= */}
-      <section className="container-x py-24 md:py-32" aria-labelledby="about-title">
-        <div className="grid gap-14 lg:grid-cols-[1fr_1.1fr] lg:gap-20">
-          <Reveal>
-            <p className="eyebrow">Who is Krrish Tapwal?</p>
-            <h2 id="about-title" className="mt-4 text-4xl font-bold leading-[1.05] sm:text-5xl">
-              Exploring Himachal and sharing <span className="text-moss">the stories behind its places.</span>
+          <Reveal className="order-1 pb-4 text-center lg:order-2 lg:pb-24">
+            <h2 id="about-title" className="text-4xl font-bold sm:text-5xl">
+              This is Me!
             </h2>
-            <p className="mt-6 text-lg leading-relaxed text-mist">{site.longBio[0]}</p>
-            <p className="mt-4 text-lg leading-relaxed text-mist">{site.longBio[1]}</p>
-            <Link href="/about" className="btn btn-ghost mt-8">
-              More about me <ArrowRightIcon width={18} height={18} />
+            <p className="mx-auto mt-6 max-w-lg text-[0.95rem] font-extralight leading-relaxed">{site.longBio[0]}</p>
+            <p className="mx-auto mt-4 max-w-lg text-[0.95rem] font-extralight leading-relaxed">{site.longBio[1]}</p>
+            <dl className="mx-auto mt-9 grid max-w-md grid-cols-4 gap-2">
+              {stats.map((s) => (
+                <div key={s.label}>
+                  <dd className="text-2xl font-bold tabular-nums sm:text-3xl">{s.value}</dd>
+                  <dt className="mt-0.5 text-[0.7rem] font-medium uppercase tracking-wide text-white/80">{s.label}</dt>
+                </div>
+              ))}
+            </dl>
+            <Link href="/about" className="btn btn-light mt-9">
+              More About Me
             </Link>
           </Reveal>
-          <div className="grid gap-4 sm:grid-cols-2">
-            {pillars.map(({ Icon, title, text }, i) => (
-              <Reveal key={title} delay={i * 90} className="card group p-6 transition duration-500 hover:-translate-y-1 hover:border-moss/30">
-                <span className="grid size-12 place-items-center rounded-2xl bg-moss/10 text-moss transition group-hover:bg-moss group-hover:text-ink">
-                  <Icon width={24} height={24} />
-                </span>
-                <h3 className="mt-5 font-display text-xl font-semibold">{title}</h3>
-                <p className="mt-2 text-mist">{text}</p>
-              </Reveal>
+
+          <div className="order-3 grid grid-cols-2 gap-4 lg:block">
+            <div className="duotone relative aspect-[3/4] lg:hidden">
+              <Image src={profileImage} alt="" fill sizes="50vw" className="object-cover object-top" />
+            </div>
+            <div className="duotone relative aspect-[3/4]">
+              <Image src={thumb("QHAmMv4mdRE", "hq")} alt={`${site.name} on the trail to Kanchana Mata Temple`} fill sizes="(min-width: 1024px) 25vw, 50vw" className="scale-[1.34] object-cover object-[35%_center]" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================= GALLERY ================= */}
+      <section id="gallery" className="scroll-mt-24 py-20 md:py-28" aria-labelledby="gallery-title">
+        <div className="container-x">
+          <SectionTitle id="gallery-title">My Best Side</SectionTitle>
+          <div className="grid grid-cols-2 gap-2 md:grid-cols-4">
+            {galleryShots.slice(0, 1).map((g) => (
+              <GalleryTile key={g.id} {...g} />
+            ))}
+            <a
+              href={followHref}
+              target="_blank"
+              rel="noopener noreferrer me"
+              className="group flex aspect-square flex-col items-center justify-center bg-coral p-4 text-center text-white transition hover:bg-coral-dark"
+            >
+              <span className="text-2xl font-semibold sm:text-[1.7rem]">Follow Me</span>
+              <span className="my-3 h-[3px] w-8 bg-white" />
+              <span className="break-all text-sm font-semibold">{instaHandle}</span>
+            </a>
+            {galleryShots.slice(1).map((g) => (
+              <GalleryTile key={g.id} {...g} />
             ))}
           </div>
         </div>
       </section>
 
-      {/* ================= FEATURED + LATEST ================= */}
-      <section className="container-x py-12 md:py-20" aria-labelledby="latest-title">
-        <SectionHeading
-          eyebrow="Latest on YouTube"
-          title={<span id="latest-title">Fresh from the mountains</span>}
-          intro="Watch here or visit YouTube to like, comment, and subscribe."
-          action={{ href: "/videos", label: "All videos" }}
-        />
-        {featured && (
-          <Reveal className="grid gap-8 lg:grid-cols-[1.6fr_1fr] lg:items-center">
-            <YouTubeEmbed id={featured.id} title={featured.title} />
-            <div>
-              <span className="inline-flex items-center gap-2 rounded-full bg-moss/10 px-3 py-1 text-xs font-semibold text-moss">
-                <span className="size-1.5 animate-pulse rounded-full bg-moss" /> Newest upload
-              </span>
-              <h3 className="mt-4 font-display text-3xl font-bold leading-tight">{featured.title}</h3>
-              <p className="mt-3 text-mist">{featured.description}</p>
-              <p className="mt-4 text-sm text-fog">
-                <time dateTime={featured.publishedAt}>{formatDate(featured.publishedAt)}</time>
-                {featured.duration ? ` · ${featured.duration}` : ""}
-              </p>
-              <a href={watchUrl(featured.id)} target="_blank" rel="noopener noreferrer" className="btn btn-ghost mt-6">
-                Watch on YouTube <ArrowUpRightIcon width={16} height={16} />
-              </a>
-            </div>
-          </Reveal>
-        )}
-        <div className="mt-16 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
-          {latest.map((v, i) => (
-            <VideoCard key={v.id} video={v} delay={(i % 3) * 90} />
-          ))}
-        </div>
-      </section>
-
-      {/* ================= SHORTS ================= */}
-      <section className="py-20 md:py-28" aria-labelledby="shorts-title">
+      {/* ================= VIDEOS ================= */}
+      <section id="videos" className="scroll-mt-24" aria-labelledby="videos-title">
         <div className="container-x">
-          <SectionHeading
-            eyebrow="Shorts"
-            title={<span id="shorts-title">60 seconds of Himachal</span>}
-            intro={`${compactNumber(totalShortViews)}+ views across Shorts featuring the Scorpio, Royal Enfield, temples, and monsoon landscapes.`}
-            action={{ href: "/videos#shorts", label: "All shorts" }}
-          />
+          <SectionTitle id="videos-title">My Videos</SectionTitle>
         </div>
-        <div className="no-scrollbar flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 sm:px-6 lg:px-[max(2rem,calc((100vw_-_80rem)/2_+_2rem))]">
-          {shorts.slice(0, 12).map((s) => (
-            <ShortCard key={s.id} short={s} />
+        {featured && <YouTubeEmbed id={featured.id} title={featured.title} heading={featured.title} />}
+        <div className="grid grid-cols-2 lg:grid-cols-4">
+          {strip.map((v) => (
+            <VideoTile key={v.id} video={v} />
           ))}
         </div>
-      </section>
-
-      {/* ================= PLACES ================= */}
-      <section className="container-x py-20 md:py-28" aria-labelledby="places-title">
-        <SectionHeading
-          eyebrow="Hidden Himachal"
-          title={<span id="places-title">Places I have explored</span>}
-          intro="Discover remarkable places across Mandi and Sarkaghat, from historic sites to local landmarks."
-        />
-        <div className="grid gap-5 md:grid-cols-2">
-          {places.map((p, i) => (
-            <Reveal key={p.name} delay={(i % 2) * 100} as="article" className="group relative min-h-80 overflow-hidden rounded-3xl border border-line">
-              <Image src={thumb(p.videoId, "hq")} alt={`${p.name}, ${p.area} — Himachal Pradesh`} fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover transition duration-1000 group-hover:scale-105" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/10" />
-              <div className="relative flex h-full min-h-80 flex-col justify-end p-7">
-                <span className="font-display text-sm font-bold text-moss">0{i + 1}</span>
-                <h3 className="mt-1 font-display text-3xl font-bold">{p.name}</h3>
-                <p className="mt-1 inline-flex items-center gap-1.5 text-sm text-white/85">
-                  <MapPinIcon width={14} height={14} /> {p.area}
-                </p>
-                <p className="mt-3 max-w-md text-white/90">{p.note}</p>
-                <a href={watchUrl(p.videoId)} target="_blank" rel="noopener noreferrer" className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-sage transition hover:gap-3">
-                  Watch the journey <ArrowRightIcon width={16} height={16} />
-                </a>
-              </div>
-            </Reveal>
-          ))}
+        <div className="container-x mt-10 text-center">
+          <Link href="/videos" className="btn btn-coral !px-10">
+            All Videos
+          </Link>
         </div>
-      </section>
 
-      {/* ================= GARAGE + TIMELINE ================= */}
-      <section className="container-x py-20 md:py-28">
-        <div className="grid gap-16 lg:grid-cols-2">
-          <div>
-            <SectionHeading eyebrow="The Garage" title="Machines behind the miles" />
-            <div className="space-y-5">
-              {garage.map((g, i) => (
-                <Reveal key={g.name} delay={i * 100} as="article" className="card group grid grid-cols-[8rem_1fr] items-center gap-5 p-3 sm:grid-cols-[11rem_1fr]">
-                  <div className="relative aspect-video overflow-hidden rounded-2xl">
-                    <Image src={thumb(g.videoId, "mq")} alt={`${g.name} ${g.variant}`} fill sizes="176px" className="object-cover transition duration-700 group-hover:scale-110" />
-                  </div>
-                  <div className="pr-3">
-                    <p className="text-xs font-semibold uppercase tracking-[0.16em] text-moss">{g.variant}</p>
-                    <h3 className="mt-1 font-display text-xl font-bold sm:text-2xl">{g.name}</h3>
-                    <p className="mt-1 text-sm text-mist">{g.note}</p>
-                    <a href={watchUrl(g.videoId)} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-sage">
-                      Watch <ArrowUpRightIcon width={14} height={14} />
-                    </a>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <SectionHeading eyebrow="The Journey" title="The journey so far" />
-            <ol className="relative space-y-8 border-l border-line pl-8">
-              {timeline.map((t, i) => (
-                <Reveal key={t.title} delay={i * 60} as="li" className="relative">
-                  <span className="absolute -left-[2.3rem] top-1.5 size-3 rounded-full border-2 border-moss bg-ink" />
-                  <p className="text-xs font-semibold uppercase tracking-[0.16em] text-moss">{t.date}</p>
-                  <h3 className="mt-1 font-display text-lg font-semibold">{t.title}</h3>
-                  <p className="mt-1 text-mist">{t.text}</p>
-                </Reveal>
-              ))}
-            </ol>
+        {/* Shorts */}
+        <div className="container-x mt-20">
+          <div className="mb-6 flex items-end justify-between gap-4">
+            <h3 className="text-2xl font-bold sm:text-3xl">Shorts</h3>
+            <Link href="/videos#shorts" className="text-sm font-semibold text-coral hover:underline">
+              See all
+            </Link>
           </div>
         </div>
-      </section>
-
-      {/* ================= SHOP TEASER ================= */}
-      <section className="container-x py-20 md:py-28" aria-labelledby="shop-title">
-        <SectionHeading
-          eyebrow="Krrish Store · Coming soon"
-          title={<span id="shop-title">Himachal, delivered to your home</span>}
-          intro="XploreWithKrrish merchandise and locally sourced Himachali products are coming soon."
-          action={{ href: "/shop", label: "Visit the store" }}
-        />
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {products.slice(0, 3).map((p, i) => (
-            <ProductCard key={p.slug} product={p} delay={i * 90} />
+        <div className="no-scrollbar flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 sm:px-6 lg:px-[max(2.5rem,calc((100vw_-_80rem)/2_+_2.5rem))]">
+          {shorts.slice(0, 10).map((s) => (
+            <ShortCard key={s.id} short={s} className="w-40 sm:w-48" />
           ))}
         </div>
       </section>
 
-      {/* ================= CTA ================= */}
-      <section className="container-x pb-8 pt-12">
-        <Reveal className="grain relative isolate overflow-hidden rounded-[2rem] border border-line bg-gradient-to-br from-pine/40 via-night-2 to-night px-6 py-16 text-center sm:px-12 md:py-24">
-          <MountainScene className="absolute inset-x-0 bottom-0 -z-10 h-1/2 w-full opacity-60" variant="footer" />
-          <p className="eyebrow justify-center">Join the journey</p>
-          <h2 className="mx-auto mt-5 max-w-3xl text-4xl font-bold leading-[1.05] sm:text-6xl">Join the next adventure</h2>
-          <p className="mx-auto mt-5 max-w-xl text-lg text-mist">Subscribe for new stories, journeys, and discoveries from Himachal Pradesh.</p>
-          <a href={site.youtube.subscribeUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary mt-9 w-full max-w-full whitespace-normal !px-4 !py-4 text-base sm:w-auto sm:!px-7">
-            <YouTubeIcon /> Subscribe to {site.brand}
-          </a>
-        </Reveal>
+      {/* ================= MERCH ================= */}
+      <section className="py-20 md:py-28" aria-labelledby="shop-title">
+        <div className="container-x">
+          <SectionTitle id="shop-title" intro="XploreWithKrrish merchandise and locally sourced Himachali products — launching soon.">
+            Krrish&apos;s Merch Store
+          </SectionTitle>
+          <div className="grid grid-cols-2 gap-x-5 gap-y-10 lg:grid-cols-4 lg:gap-x-8">
+            {products.slice(0, 4).map((p, i) => (
+              <ProductCard key={p.slug} product={p} delay={i * 80} />
+            ))}
+          </div>
+          <div className="mt-12 text-center">
+            <Link href="/shop" className="btn btn-coral !px-12">
+              Shop All
+            </Link>
+          </div>
+        </div>
       </section>
     </>
+  );
+}
+
+function GalleryTile({ id, label, bg }: { id: string; label: string; bg: string }) {
+  return (
+    <a href={watchUrl(id)} target="_blank" rel="noopener noreferrer" className={`group relative block aspect-square overflow-hidden ${bg}`}>
+      <Image src={thumb(id, "hq")} alt={label} fill sizes="(min-width: 768px) 25vw, 50vw" className="scale-[1.34] object-cover transition duration-700 group-hover:scale-[1.42]" />
+      <span className="absolute inset-0 flex items-end bg-gradient-to-t from-charcoal/80 via-transparent to-transparent p-4 opacity-0 transition group-hover:opacity-100">
+        <span className="text-sm font-semibold text-white">{label}</span>
+      </span>
+    </a>
   );
 }

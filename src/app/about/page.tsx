@@ -1,16 +1,15 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import MountainScene from "@/components/MountainScene";
 import Reveal from "@/components/Reveal";
 import Socials from "@/components/Socials";
-import { ArrowRightIcon, MapPinIcon, YouTubeIcon } from "@/components/icons";
-import { JsonLd, SectionHeading } from "@/components/ui";
+import { MapPinIcon } from "@/components/icons";
+import { JsonLd, PageHero, PlayLabel, SectionTitle } from "@/components/ui";
 import { site } from "@/data/site";
 import { garage, places, timeline } from "@/data/videos";
 import { compactNumber } from "@/lib/format";
 import { breadcrumbSchema, faqSchema, graph, profilePageSchema } from "@/lib/schema";
-import { getChannelProfileImage, getChannelStats, watchUrl } from "@/lib/youtube";
+import { getChannelProfileImage, getChannelStats, thumb, watchUrl } from "@/lib/youtube";
 
 export const revalidate = 900;
 
@@ -45,8 +44,17 @@ const faqs = [
   },
 ];
 
+const tileColors = ["bg-teal", "bg-coral", "bg-violet", "bg-leaf", "bg-mustard", "bg-teal"];
+
 export default async function AboutPage() {
   const [live, profileImage] = await Promise.all([getChannelStats(), getChannelProfileImage()]);
+  const stats = [
+    { k: "Views", v: compactNumber(live.views) },
+    { k: "Subscribers", v: compactNumber(live.subscribers) },
+    { k: "Uploads", v: `${live.videos}+` },
+    { k: "Since", v: `${site.stats.since}` },
+  ];
+
   return (
     <>
       <JsonLd
@@ -60,55 +68,46 @@ export default async function AboutPage() {
         )}
       />
 
-      {/* Header */}
-      <section className="grain relative isolate overflow-hidden pb-24 pt-32 md:pt-40">
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(60%_60%_at_85%_0%,rgb(125_190_120/0.12),transparent_70%)]" />
-        <MountainScene className="absolute inset-x-0 bottom-0 -z-10 h-56 w-full opacity-70" />
-        <div className="container-x grid items-center gap-12 lg:grid-cols-[1.3fr_1fr]">
-          <Reveal>
-            <p className="eyebrow">About me</p>
-            <h1 className="mt-5 text-5xl font-extrabold leading-[0.95] tracking-[-0.04em] sm:text-7xl">
-              About <span className="text-gradient">Krrish Tapwal.</span>
-            </h1>
-            <p className="mt-6 max-w-xl text-xl text-mist">{site.shortBio}</p>
-            <p className="mt-6 inline-flex items-center gap-2 text-mist">
-              <MapPinIcon className="text-moss" /> {site.location.area}, {site.location.region}, {site.location.country}
-            </p>
-            <Socials className="mt-8" />
-          </Reveal>
-          <Reveal delay={150} className="relative mx-auto w-full max-w-sm">
-            <div className="absolute -inset-5 -z-10 rounded-full bg-white/10 blur-3xl" />
-            <div className="relative aspect-square overflow-hidden rounded-full border-4 border-night-3">
-              <Image src={profileImage} alt="Current YouTube profile photo of Krrish Tapwal" fill priority quality={90} sizes="384px" className="object-cover object-top" />
-            </div>
-          </Reveal>
-        </div>
-      </section>
+      <PageHero
+        title={
+          <>
+            About
+            <br />
+            {site.name}
+          </>
+        }
+        subtitle={site.role}
+        aside={
+          <div className="relative mx-auto aspect-square w-full max-w-xs overflow-hidden rounded-full border-[6px] border-coral">
+            <Image src={profileImage} alt="Current YouTube profile photo of Krrish Tapwal" fill priority sizes="320px" className="object-cover object-top" />
+          </div>
+        }
+      >
+        <p>{site.shortBio}</p>
+        <p className="mt-4 inline-flex items-center gap-2 font-normal text-white/80">
+          <MapPinIcon width={16} height={16} className="text-coral" /> {site.location.area}, {site.location.region}, {site.location.country}
+        </p>
+      </PageHero>
 
-      {/* Story */}
-      <section className="container-x py-16 md:py-24">
-        <div className="grid gap-12 lg:grid-cols-[0.8fr_1.4fr]">
+      {/* Story + stats (coral band) */}
+      <section className="bg-coral pb-20 text-white md:pb-28">
+        <div className="container-x grid gap-12 pt-6 lg:grid-cols-[1fr_1.4fr] lg:gap-20">
           <Reveal>
-            <p className="eyebrow">My story</p>
-            <h2 className="mt-4 text-4xl font-bold leading-tight">Exploration, technology, and authentic stories.</h2>
-            <dl className="mt-10 grid grid-cols-2 gap-4">
-              {[
-                { k: "Views", v: compactNumber(live.views) },
-                { k: "Subscribers", v: compactNumber(live.subscribers) },
-                { k: "Uploads", v: `${live.videos}+` },
-                { k: "Since", v: `${site.stats.since}` },
-              ].map((s) => (
-                <div key={s.k} className="card p-5">
-                  <dt className="text-xs text-fog">{s.k}</dt>
-                  <dd className="mt-1 font-display text-3xl font-bold">{s.v}</dd>
+            <h2 className="text-4xl font-bold sm:text-5xl">My Story</h2>
+            <dl className="mt-10 grid grid-cols-2 gap-3">
+              {stats.map((s) => (
+                <div key={s.k} className="bg-white/10 p-5">
+                  <dd className="text-3xl font-bold tabular-nums">{s.v}</dd>
+                  <dt className="mt-1 text-xs font-medium uppercase tracking-wide text-white/80">{s.k}</dt>
                 </div>
               ))}
             </dl>
-            <p className="mt-3 text-xs text-fog">Live YouTube statistics · refreshed every 15 minutes</p>
+            <p className="mt-3 text-xs text-white/75">Live YouTube statistics · refreshed every 15 minutes</p>
+            <Socials variant="light" className="mt-8" />
           </Reveal>
-          <div className="space-y-6 text-lg leading-relaxed text-mist">
+          <div className="space-y-5 text-[0.98rem] font-extralight leading-relaxed">
             {site.longBio.map((para, i) => (
-              <Reveal key={i} delay={i * 80} as="p" className={i === 0 ? "text-xl text-snow first-letter:float-left first-letter:mr-3 first-letter:font-display first-letter:text-7xl first-letter:font-bold first-letter:leading-[0.8] first-letter:text-moss" : ""}>
+              <Reveal key={i} delay={i * 70} as="p" className={i === 0 ? "text-lg font-light" : ""}>
                 {para}
               </Reveal>
             ))}
@@ -116,84 +115,91 @@ export default async function AboutPage() {
         </div>
       </section>
 
-      {/* Explored + Garage */}
-      <section className="container-x py-16 md:py-24">
-        <SectionHeading eyebrow="Explored" title="Places & machines" />
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {places.map((p, i) => (
-            <Reveal key={p.name} delay={(i % 3) * 80} className="card p-6">
-              <p className="inline-flex items-center gap-1.5 text-sm text-moss">
-                <MapPinIcon width={14} height={14} /> {p.area}
-              </p>
-              <h3 className="mt-2 font-display text-xl font-semibold">{p.name}</h3>
-              <p className="mt-2 text-mist">{p.note}</p>
-              <a href={watchUrl(p.videoId)} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-sage">
-                Watch <ArrowRightIcon width={14} height={14} />
-              </a>
-            </Reveal>
-          ))}
-          {garage.map((g, i) => (
-            <Reveal key={g.name} delay={(i % 3) * 80} className="card p-6">
-              <p className="text-sm text-moss">🏍️ {g.variant}</p>
-              <h3 className="mt-2 font-display text-xl font-semibold">{g.name}</h3>
-              <p className="mt-2 text-mist">{g.note}</p>
-              <a href={watchUrl(g.videoId)} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-sage">
-                Watch <ArrowRightIcon width={14} height={14} />
-              </a>
-            </Reveal>
-          ))}
+      {/* Places explored */}
+      <section className="py-20 md:py-28" aria-labelledby="places-title">
+        <div className="container-x">
+          <SectionTitle id="places-title" intro="Remarkable places across Mandi and Sarkaghat, from historic forts to hilltop temples.">
+            Places I&apos;ve Explored
+          </SectionTitle>
+          <div className="grid gap-2 sm:grid-cols-2">
+            {places.map((p, i) => (
+              <Reveal key={p.name} delay={(i % 2) * 80} as="article">
+                <a href={watchUrl(p.videoId)} target="_blank" rel="noopener noreferrer" className={`group relative block aspect-video overflow-hidden ${tileColors[i]}`}>
+                  <Image src={thumb(p.videoId, "hq")} alt={`${p.name}, ${p.area}`} fill sizes="(min-width: 640px) 50vw, 100vw" className="object-cover transition duration-700 group-hover:scale-105" />
+                  <span className="absolute inset-0 bg-charcoal/50 transition group-hover:bg-charcoal/35" />
+                  <span className="absolute inset-0 flex flex-col items-center justify-center gap-2 p-6 text-center text-white">
+                    <span className="text-2xl font-bold sm:text-3xl">{p.name}</span>
+                    <span className="inline-flex items-center gap-1.5 text-sm font-light">
+                      <MapPinIcon width={14} height={14} /> {p.area}
+                    </span>
+                    <span className="mt-3">
+                      <PlayLabel label="Watch the Journey" />
+                    </span>
+                  </span>
+                </a>
+                <p className="mt-3 text-sm text-muted">{p.note}</p>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Garage */}
+      <section className="bg-white py-20 md:py-28" aria-labelledby="garage-title">
+        <div className="container-x">
+          <SectionTitle id="garage-title">The Garage</SectionTitle>
+          <div className="grid gap-8 md:grid-cols-2">
+            {garage.map((g, i) => (
+              <Reveal key={g.name} delay={i * 90} as="article" className="text-center">
+                <a href={watchUrl(g.videoId)} target="_blank" rel="noopener noreferrer" className={`group relative block aspect-video overflow-hidden ${i ? "bg-teal" : "bg-coral"}`}>
+                  <Image src={thumb(g.videoId, "hq")} alt={`${g.name} ${g.variant}`} fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover transition duration-700 group-hover:scale-105" />
+                </a>
+                <h3 className="mt-5 text-2xl font-semibold">{g.name}</h3>
+                <p className="mt-1 text-sm font-semibold uppercase tracking-wide text-coral">{g.variant}</p>
+                <p className="mx-auto mt-2 max-w-sm text-sm text-muted">{g.note}</p>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* Timeline */}
-      <section className="container-x py-16 md:py-24">
-        <SectionHeading eyebrow="Timeline" title="The journey so far" />
-        <ol className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {timeline.map((t, i) => (
-            <Reveal key={t.title} as="li" delay={(i % 3) * 80} className="card relative p-6">
-              <span className="font-display text-5xl font-extrabold text-ink/5">{String(i + 1).padStart(2, "0")}</span>
-              <p className="-mt-4 text-xs font-semibold uppercase tracking-[0.16em] text-moss">{t.date}</p>
-              <h3 className="mt-1 font-display text-lg font-semibold">{t.title}</h3>
-              <p className="mt-1 text-mist">{t.text}</p>
-            </Reveal>
-          ))}
-        </ol>
-      </section>
-
-      {/* FAQ */}
-      <section className="container-x py-16 md:py-24" aria-labelledby="faq-title">
-        <SectionHeading eyebrow="FAQ" title={<span id="faq-title">About Krrish Tapwal</span>} />
-        <div className="mx-auto max-w-3xl divide-y divide-line border-y border-line">
-          {faqs.map((f) => (
-            <details key={f.q} className="group py-5">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-6 font-display text-lg font-semibold [&::-webkit-details-marker]:hidden">
-                {f.q}
-                <span className="grid size-8 shrink-0 place-items-center rounded-full border border-line text-moss transition group-open:rotate-45">+</span>
-              </summary>
-              <p className="mt-3 text-mist">{f.a}</p>
-            </details>
-          ))}
+      <section className="py-20 md:py-28" aria-labelledby="journey-title">
+        <div className="container-x">
+          <SectionTitle id="journey-title">The Journey So Far</SectionTitle>
+          <ol className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+            {timeline.map((t, i) => (
+              <Reveal key={t.title} as="li" delay={(i % 4) * 70} className={`p-6 text-white ${["bg-coral", "bg-teal", "bg-violet", "bg-charcoal"][i % 4]}`}>
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-white/80">{t.date}</p>
+                <h3 className="mt-2 text-lg font-semibold leading-snug">{t.title}</h3>
+                <p className="mt-2 text-sm font-light text-white/90">{t.text}</p>
+              </Reveal>
+            ))}
+          </ol>
         </div>
       </section>
 
-      {/* Collab CTA */}
-      <section className="container-x pt-8">
-        <Reveal className="card flex flex-col items-start justify-between gap-6 p-8 md:flex-row md:items-center md:p-12">
-          <div>
-            <h2 className="text-3xl font-bold sm:text-4xl">Work together</h2>
-            <p className="mt-2 max-w-xl text-mist">Open to partnerships with travel, tourism, automotive, and lifestyle brands.</p>
+      {/* FAQ */}
+      <section className="pb-20 md:pb-28" aria-labelledby="faq-title">
+        <div className="container-x">
+          <SectionTitle id="faq-title">Questions About Me</SectionTitle>
+          <div className="mx-auto max-w-3xl divide-y divide-line border-y border-line">
+            {faqs.map((f) => (
+              <details key={f.q} className="group py-5">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-6 text-lg font-semibold [&::-webkit-details-marker]:hidden">
+                  {f.q}
+                  <span className="grid size-8 shrink-0 place-items-center rounded-full bg-coral text-white transition group-open:rotate-45">+</span>
+                </summary>
+                <p className="mt-3 text-muted">{f.a}</p>
+              </details>
+            ))}
           </div>
-          <div className="flex flex-wrap gap-3">
-            {site.email ? (
-              <a href={`mailto:${site.email}`} className="btn btn-primary">Email me</a>
-            ) : (
-              <a href={site.youtube.url} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
-              <YouTubeIcon /> Contact me on YouTube
-              </a>
-            )}
-            <Link href="/videos" className="btn btn-ghost">View my work</Link>
+          <div className="mt-12 text-center">
+            <Link href="/videos" className="btn btn-coral !px-10">
+              Watch My Videos
+            </Link>
           </div>
-        </Reveal>
+        </div>
       </section>
     </>
   );

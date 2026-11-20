@@ -16,9 +16,18 @@ export function activeSocials() {
     .map((k) => ({ key: k, href: site.socials[k], ...meta[k] }));
 }
 
-export default function Socials({ className = "" }: { className?: string }) {
+/**
+ * Round social buttons.
+ *  - "light": white circles with a teal glyph (used on the teal Follow band)
+ *  - "dark":  charcoal circles with a white glyph (used on paper backgrounds)
+ */
+export default function Socials({ className = "", variant = "dark" }: { className?: string; variant?: "light" | "dark" }) {
+  const circle =
+    variant === "light"
+      ? "bg-white text-teal hover:bg-charcoal hover:text-white"
+      : "bg-charcoal text-white hover:bg-coral";
   return (
-    <ul className={`flex flex-wrap items-center gap-2 ${className}`}>
+    <ul className={`flex flex-wrap items-center gap-3 ${className}`}>
       {activeSocials().map(({ key, href, label, Icon }) => (
         <li key={key}>
           <a
@@ -26,20 +35,16 @@ export default function Socials({ className = "" }: { className?: string }) {
             target="_blank"
             rel="noopener noreferrer me"
             aria-label={`${site.name} on ${label}`}
-            className="grid size-11 place-items-center rounded-full border border-line bg-white/[0.03] text-mist transition hover:-translate-y-0.5 hover:border-moss/50 hover:text-moss"
+            className={`grid size-10 place-items-center rounded-full transition hover:-translate-y-0.5 ${circle}`}
           >
-            <Icon />
+            <Icon width={18} height={18} />
           </a>
         </li>
       ))}
       {site.email && (
         <li>
-          <a
-            href={`mailto:${site.email}`}
-            aria-label={`Email ${site.name}`}
-            className="grid size-11 place-items-center rounded-full border border-line bg-white/[0.03] text-mist transition hover:-translate-y-0.5 hover:border-moss/50 hover:text-moss"
-          >
-            <MailIcon />
+          <a href={`mailto:${site.email}`} aria-label={`Email ${site.name}`} className={`grid size-10 place-items-center rounded-full transition hover:-translate-y-0.5 ${circle}`}>
+            <MailIcon width={18} height={18} />
           </a>
         </li>
       )}

@@ -16,7 +16,7 @@ export type Product = {
   buyUrl?: string;
   emoji: string; // photo aane tak placeholder
   image?: string; // e.g. "/images/shop/ghee.jpg" (public/ folder mein daalo)
-  tone: "moss" | "pine" | "snow" | "dusk";
+  tone: "coral" | "violet" | "teal" | "silver" | "mustard" | "leaf"; // tile ka background colour
 };
 
 export const products: Product[] = [
@@ -27,7 +27,7 @@ export const products: Product[] = [
     description: "A heavyweight cotton tee featuring mountain line art and the XploreWithKrrish design.",
     status: "coming-soon",
     emoji: "👕",
-    tone: "dusk",
+    tone: "coral",
   },
   {
     slug: "mountain-hoodie",
@@ -36,7 +36,7 @@ export const products: Product[] = [
     description: "A warm fleece hoodie featuring an original Himachal-inspired mountain graphic.",
     status: "coming-soon",
     emoji: "🧥",
-    tone: "pine",
+    tone: "violet",
   },
   {
     slug: "pahadi-desi-ghee",
@@ -45,7 +45,7 @@ export const products: Product[] = [
     description: "Traditional ghee sourced from local producers in Himachal Pradesh.",
     status: "coming-soon",
     emoji: "🧈",
-    tone: "moss",
+    tone: "teal",
   },
   {
     slug: "himachali-goodies",
@@ -54,7 +54,7 @@ export const products: Product[] = [
     description: "A curated selection of regional spices, rajma, honey, and local Himachali specialties.",
     status: "coming-soon",
     emoji: "🎁",
-    tone: "snow",
+    tone: "silver",
   },
   {
     slug: "xplore-cap",
@@ -63,7 +63,7 @@ export const products: Product[] = [
     description: "An embroidered XploreWithKrrish cap for treks, rides, and everyday wear.",
     status: "coming-soon",
     emoji: "🧢",
-    tone: "dusk",
+    tone: "mustard",
   },
   {
     slug: "sticker-pack",
@@ -72,6 +72,6 @@ export const products: Product[] = [
     description: "A collection of Himachal-inspired stickers for helmets, laptops, and more.",
     status: "coming-soon",
     emoji: "🏔️",
-    tone: "pine",
+    tone: "leaf",
   },
 ];

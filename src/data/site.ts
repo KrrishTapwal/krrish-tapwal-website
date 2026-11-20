@@ -98,6 +98,8 @@ export type SocialKey = keyof typeof site.socials;
 export const navLinks = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
+  { href: "/#gallery", label: "Gallery" },
   { href: "/videos", label: "Videos" },
   { href: "/shop", label: "Shop" },
+  { href: "#follow", label: "Follow Me" },
 ] as const;

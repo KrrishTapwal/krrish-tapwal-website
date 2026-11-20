@@ -2,20 +2,23 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { PlayIcon } from "./icons";
+import { PlayCircleIcon } from "./icons";
 
 /**
- * Lite YouTube embed — pehle sirf thumbnail load hota hai (fast page),
- * click karne par hi asli YouTube player load hota hai.
+ * Full-width featured video banner (lite embed).
+ * Shows the thumbnail with a centred title + "Play Video"; the real YouTube
+ * player only loads after a click, which keeps the page fast.
  */
 export default function YouTubeEmbed({
   id,
   title,
+  heading,
   priority = false,
   className = "",
 }: {
   id: string;
   title: string;
+  heading?: string;
   priority?: boolean;
   className?: string;
 }) {
@@ -23,7 +26,7 @@ export default function YouTubeEmbed({
   const [hd, setHd] = useState(true);
 
   return (
-    <div className={`relative aspect-video w-full overflow-hidden rounded-[1.25rem] bg-night-2 ${className}`}>
+    <div className={`relative aspect-video w-full overflow-hidden bg-charcoal md:aspect-[21/9] ${className}`}>
       {active ? (
         <iframe
           className="absolute inset-0 size-full"
@@ -33,24 +36,23 @@ export default function YouTubeEmbed({
           allowFullScreen
         />
       ) : (
-        <button
-          type="button"
-          onClick={() => setActive(true)}
-          className="group absolute inset-0 size-full cursor-pointer"
-          aria-label={`Play video: ${title}`}
-        >
+        <button type="button" onClick={() => setActive(true)} className="group absolute inset-0 size-full cursor-pointer" aria-label={`Play video: ${title}`}>
           <Image
             src={`https://i.ytimg.com/vi/${id}/${hd ? "maxresdefault" : "hqdefault"}.jpg`}
             alt={title}
             fill
             onError={() => setHd(false)}
             priority={priority}
-            sizes="(min-width: 1024px) 60vw, 100vw"
-            className="object-cover transition duration-700 group-hover:scale-[1.03]"
+            sizes="100vw"
+            className="object-cover transition duration-1000 group-hover:scale-[1.02]"
           />
-          <span className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-          <span className="absolute left-1/2 top-1/2 grid size-20 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-snow text-ink shadow-[0_0_0_10px_rgb(255_255_255/0.15)] transition duration-500 group-hover:scale-110 group-hover:bg-sage group-hover:shadow-[0_0_0_16px_rgb(125_190_120/0.2)]">
-            <PlayIcon width={30} height={30} className="translate-x-0.5" />
+          <span className="absolute inset-0 bg-charcoal/45 transition group-hover:bg-charcoal/35" />
+          <span className="absolute inset-0 flex flex-col items-center justify-center gap-4 px-6 text-center text-white">
+            <span className="max-w-3xl text-2xl font-bold leading-tight drop-shadow sm:text-4xl md:text-5xl">{heading ?? title}</span>
+            <span className="play-link">
+              <PlayCircleIcon width={30} height={30} />
+              <span>Play Video</span>
+            </span>
           </span>
         </button>
       )}

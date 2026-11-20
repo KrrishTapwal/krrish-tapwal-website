@@ -46,6 +46,12 @@ export const PlayIcon = (p: P) => (
     <path d="M8 5.1v13.8a1 1 0 0 0 1.5.9l11-6.9a1 1 0 0 0 0-1.8l-11-6.9A1 1 0 0 0 8 5.1Z" />
   </svg>
 );
+export const PlayCircleIcon = (p: P) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} {...base(p)}>
+    <circle cx="12" cy="12" r="10" />
+    <path d="M10 8.5v7l5.5-3.5L10 8.5Z" fill="currentColor" stroke="none" />
+  </svg>
+);
 export const ArrowRightIcon = (p: P) => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" {...base(p)}>
     <path d="M5 12h14M13 6l6 6-6 6" />
