@@ -53,14 +53,12 @@ export const site = {
   },
 
   /**
-   * SOCIAL LINKS — YouTube channel par abhi koi aur link nahi tha.
-   * Apna Instagram / Facebook / X / WhatsApp link yahan daal do,
-   * khali ("") chhodoge to website par woh icon nahi dikhega.
+   * Social links: leave a value empty to hide its icon from the website.
    */
   socials: {
     youtube: "https://www.youtube.com/@KRRISHTAPWAL001",
-    instagram: "",
-    facebook: "",
+    instagram: "https://www.instagram.com/krrish_thakur01/",
+    facebook: "https://www.facebook.com/krishi.krishitapwal",
     x: "",
     linkedin: "",
     whatsapp: "", // e.g. "https://wa.me/91XXXXXXXXXX"
