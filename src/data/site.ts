@@ -18,6 +18,38 @@ export const site = {
   brand: "XploreWithKrrish",
   role: "Himachal Explorer",
   tagline: "Exploring Himachal through its landscapes, heritage, road trips, and stories.",
+
+  // Homepage hero copy
+  hero: {
+    kicker: "Sarkaghat · Mandi · Himachal Pradesh",
+    lead: "Forgotten forts, hilltop temples, misty mountain roads — and the people who make every trail feel like home. Pahadi by heart, engineer by trade.",
+  },
+
+  /**
+   * Har page ke hero ke peeche chalne wali (muted, faded, loop) YouTube video.
+   * `id` = video ID (youtube.com/watch?v=YAHAN_WALA), `start` = kitne second se shuru ho (240 = 4 minute).
+   * Video khatam hone par wapas `start` se hi chalti hai.
+   * (Home hero ki photo apne aap aapki latest YouTube profile photo hoti hai.)
+   */
+  backgroundVideos: {
+    home: { id: "QHAmMv4mdRE", start: 240 }, // Kanchana Mata Temple, Anantpur Garh
+    about: { id: "Zt6EH13HBM8", start: 240 }, // Bengaluru → Himachal road trip
+    videos: { id: "sY2h1Gsx_ZI", start: 240 }, // Morning ride in the mountains
+    shop: { id: "xcYFq7LX7Is", start: 240 }, // Diwali at home
+    notFound: { id: "sbHuha-IWzY", start: 240 }, // Kamlah Fort trail
+  },
+
+  // Site ki saari video cards / players muted autoplay hoti hain — is second se (240 = 4 minute).
+  // (Shorts hamesha shuru se chalte hain; 4 min se chhoti video apne aap 0:00 se chalti hai.)
+  videoPreviewStart: 240,
+
+  // "Who I am" chips + cards (About & Home)
+  identities: [
+    { title: "Explorer", text: "Chasing hidden trails, old forts and temples above the clouds across Mandi district." },
+    { title: "CSE Engineer", text: "A Computer Science Engineering professional who loves building with technology." },
+    { title: "Data Scientist", text: "Turning numbers into insight by day — and footage into stories by night." },
+    { title: "Rider", text: "Mountain mornings on a Meteor 350, family road trips in the Scorpio Classic." },
+  ],
   location: {
     region: "Himachal Pradesh",
     area: "Sarkaghat, Mandi",
@@ -46,7 +78,7 @@ export const site = {
   // Stats — YouTube se liye gaye (Nov 2026). Time-time par update karte rehna.
   stats: {
     subscribers: 962,
-    views: 64734,
+    views: 64714,
     videos: 25,
     since: 2020,
     asOf: "November 2026",
@@ -98,8 +130,8 @@ export type SocialKey = keyof typeof site.socials;
 export const navLinks = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
-  { href: "/#gallery", label: "Gallery" },
   { href: "/videos", label: "Videos" },
+  { href: "/#gallery", label: "Gallery" },
   { href: "/shop", label: "Shop" },
-  { href: "#follow", label: "Follow Me" },
+  { href: "#follow", label: "Contact" },
 ] as const;

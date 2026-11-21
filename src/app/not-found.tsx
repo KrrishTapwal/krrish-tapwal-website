@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { PageHero } from "@/components/ui";
+import { site } from "@/data/site";
 
 export const metadata: Metadata = {
   title: "Page Not Found",
@@ -9,14 +10,19 @@ export const metadata: Metadata = {
 
 export default function NotFound() {
   return (
-    <>
-      <PageHero title="Trail Not Found" subtitle="404 · Page not found">
-        <p>This page may have moved or no longer exists. Return to the homepage to continue exploring.</p>
-        <Link href="/" className="btn btn-coral mt-8">
-          Return Home
-        </Link>
-      </PageHero>
-      <div className="h-24 bg-coral" />
-    </>
+    <PageHero
+      eyebrow="Error 404 · Signal lost"
+      video={site.backgroundVideos.notFound}
+      title={
+        <>
+          Trail <span className="text-glow">not found</span>
+        </>
+      }
+    >
+      <p>This page may have moved or no longer exists. Head back to base camp and keep exploring.</p>
+      <Link href="/" className="btn btn-primary mt-8">
+        Return home
+      </Link>
+    </PageHero>
   );
 }
