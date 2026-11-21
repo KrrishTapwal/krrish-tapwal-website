@@ -30,5 +30,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
       images: videos.slice(0, 10).map((v) => thumb(v.id)),
     },
+    {
+      url: `${site.url}/shop`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.6,
+    },
   ];
 }

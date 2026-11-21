@@ -46,7 +46,7 @@ export const site = {
   // Stats — YouTube se liye gaye (Nov 2026). Time-time par update karte rehna.
   stats: {
     subscribers: 962,
-    views: 64714,
+    views: 64734,
     videos: 25,
     since: 2020,
     asOf: "November 2026",
