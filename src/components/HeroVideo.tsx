@@ -30,8 +30,19 @@ export default function HeroVideo({ id, start = 0 }: { id: string; start?: numbe
   useEffect(() => {
     const conn = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
     if (conn?.saveData) return;
-    const t = window.setTimeout(() => setMount(true), 600);
-    return () => clearTimeout(t);
+    // Wait until the page has fully loaded and the browser is idle, so the poster and
+    // content paint first and the hero player never competes with them.
+    let t = 0;
+    const start = () => {
+      const idle = (window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number }).requestIdleCallback;
+      t = idle ? idle(() => setMount(true), { timeout: 2500 }) : window.setTimeout(() => setMount(true), 800);
+    };
+    if (document.readyState === "complete") start();
+    else window.addEventListener("load", start, { once: true });
+    return () => {
+      window.removeEventListener("load", start);
+      window.clearTimeout(t);
+    };
   }, []);
 
   useEffect(() => {

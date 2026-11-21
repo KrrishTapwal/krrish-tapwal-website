@@ -13,7 +13,7 @@ const subscribe = (l: () => void) => {
   listeners.add(l);
   return () => listeners.delete(l);
 };
-const cap = () => (typeof document !== "undefined" && document.documentElement.classList.contains("lite") ? 2 : 4);
+const cap = () => (typeof document !== "undefined" && document.documentElement.classList.contains("lite") ? 3 : 6);
 function enter(key: string) {
   if (!queue.includes(key)) queue.push(key);
   emit();
@@ -50,9 +50,26 @@ export default function AutoPlayer({ id, start = 0, zoom = 118 }: { id: string; 
     if (!el) return;
     const conn = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
     if (conn?.saveData) return;
-    const io = new IntersectionObserver(([e]) => (e.isIntersecting ? enter(key) : leave(key)), { threshold: 0.55 });
+    // Only load a player after the card has stayed on screen briefly, so fast scrolling
+    // never spawns a burst of YouTube iframes. Also release all players while the tab is hidden.
+    let dwell = 0;
+    const io = new IntersectionObserver(
+      ([e]) => {
+        window.clearTimeout(dwell);
+        if (e.isIntersecting) dwell = window.setTimeout(() => !document.hidden && enter(key), 450);
+        else leave(key);
+      },
+      { threshold: 0.2 },
+    );
     io.observe(el);
+    const onVisibility = () => {
+      if (document.hidden) leave(key);
+      else if (el.getBoundingClientRect().top < window.innerHeight && el.getBoundingClientRect().bottom > 0) enter(key);
+    };
+    document.addEventListener("visibilitychange", onVisibility);
     return () => {
+      window.clearTimeout(dwell);
+      document.removeEventListener("visibilitychange", onVisibility);
       io.disconnect();
       leave(key);
     };
@@ -75,12 +92,19 @@ export default function AutoPlayer({ id, start = 0, zoom = 118 }: { id: string; 
     // keep nudging until it plays
     let tries = 0;
     const kicker = window.setInterval(() => {
-      if (playingRef.current || ++tries > 30) return clearInterval(kicker);
+      if (playingRef.current || ++tries > 60) return clearInterval(kicker);
       play();
     }, 1500);
-    const onGesture = () => play();
-    window.addEventListener("pointerdown", onGesture, { passive: true, once: true });
-    window.addEventListener("scroll", onGesture, { passive: true, once: true });
+    // Any interaction nudges a stalled preview to start (throttled; stops once it plays)
+    let lastNudge = 0;
+    const onGesture = () => {
+      const now = Date.now();
+      if (playingRef.current || now - lastNudge < 700) return;
+      lastNudge = now;
+      play();
+    };
+    const gestures = ["pointermove", "pointerdown", "touchstart", "scroll", "keydown"] as const;
+    gestures.forEach((g) => window.addEventListener(g, onGesture, { passive: true }));
 
     const onMessage = (e: MessageEvent) => {
       if (e.source !== frame.current?.contentWindow || typeof e.data !== "string") return;
@@ -105,8 +129,7 @@ export default function AutoPlayer({ id, start = 0, zoom = 118 }: { id: string; 
     window.addEventListener("message", onMessage);
     return () => {
       clearInterval(kicker);
-      window.removeEventListener("pointerdown", onGesture);
-      window.removeEventListener("scroll", onGesture);
+      gestures.forEach((g) => window.removeEventListener(g, onGesture));
       window.removeEventListener("message", onMessage);
     };
   }, [allowed, start]);

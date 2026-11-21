@@ -99,6 +99,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en-IN" className={`${unbounded.variable} ${grotesk.variable} ${jetbrains.variable}`} data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
+        <link rel="preconnect" href="https://i.ytimg.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://www.youtube-nocookie.com" />
         <script dangerouslySetInnerHTML={{ __html: liteScript }} />
       </head>
       <body className="min-h-dvh">
