@@ -53,6 +53,16 @@ export default function AutoPlayer({ id, start = 0, zoom = 118 }: { id: string; 
     if (!el) return;
     const conn = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
     if (conn?.saveData) return;
+    // Phones: load a player only while its card is on screen or about to be, so only a few
+    // run at a time and the page stays fast. Desktop preloads everything (below).
+    if (window.matchMedia("(max-width: 767px)").matches) {
+      const near = new IntersectionObserver(([e]) => (e.isIntersecting ? enter(key) : leave(key)), { rootMargin: "60% 60% 60% 60%" });
+      near.observe(el);
+      return () => {
+        near.disconnect();
+        leave(key);
+      };
+    }
     let t = 0;
     const begin = () => {
       t = window.setTimeout(() => enter(key), 300 + order++ * 250);

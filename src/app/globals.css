@@ -468,3 +468,55 @@ html.lite .text-glow { background-position: 0 center; }
   .line-mask > span { transform: none; }
   .fade-in { opacity: 1; }
 }
+
+/* ============================================================
+   Phones — snappy motion. Same look, much shorter and lighter:
+   quick reveals (no stagger delay, no blur/clip), no looping or
+   scroll-linked animations, no backdrop blur / big glows / grain.
+   ============================================================ */
+@media (max-width: 767px) {
+  html { scroll-behavior: auto; }
+  .reveal,
+  .reveal[data-variant] {
+    transition: opacity 0.3s ease-out, transform 0.35s ease-out;
+    transition-delay: 0ms;
+    filter: none;
+    clip-path: none;
+  }
+  .reveal[data-variant="up"],
+  .reveal[data-variant="blur"],
+  .reveal[data-variant="clip"] { transform: translateY(14px); }
+  .reveal[data-variant="left"],
+  .reveal[data-variant="right"],
+  .reveal[data-variant="scale"] { transform: none; }
+  .reveal[data-variant="clip"] { opacity: 0; }
+  .reveal.is-visible,
+  .reveal[data-variant].is-visible { opacity: 1; transform: none; }
+
+  .line-mask > span { animation-duration: 0.45s; animation-delay: 0ms; }
+  .fade-in { animation: fade-in-quick 0.35s ease-out forwards; animation-delay: 0ms; }
+  @keyframes fade-in-quick {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  [class*="animate-"]:not([class*="animate-marquee"]),
+  .text-glow { animation: none !important; }
+  .parallax-img,
+  .timeline-progress,
+  .stack-card { animation: none !important; }
+  .timeline-progress { transform: none; }
+
+  body::after { display: none; }
+  .glass,
+  .btn-ghost,
+  [class*="backdrop-blur"] {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  .glass { background: rgb(21 24 38 / 0.94); }
+  [class*="backdrop-blur"] { background-color: rgb(7 8 15 / 0.96); }
+  .blur-3xl,
+  [class*="blur-[1"] { display: none; }
+  .card-zoom img { transition: none; }
+}
