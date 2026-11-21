@@ -13,8 +13,8 @@ const subscribe = (l: () => void) => {
   listeners.add(l);
   return () => listeners.delete(l);
 };
-// Everything plays on open; only weak devices (html.lite) keep a small limit.
-const cap = () => (typeof document !== "undefined" && document.documentElement.classList.contains("lite") ? 4 : Infinity);
+// Everything plays on open — no limit, so reels and every card get a player.
+const cap = () => Infinity;
 let order = 0;
 function enter(key: string) {
   if (!queue.includes(key)) queue.push(key);
@@ -73,17 +73,30 @@ export default function AutoPlayer({ id, start = 0, zoom = 118 }: { id: string; 
       return;
     }
     const send = (func: string, args: unknown[] = []) => frame.current?.contentWindow?.postMessage(JSON.stringify({ event: "command", func, args }), "*");
+    // Browsers only let a muted preview run while it is actually on screen, so every player is
+    // loaded and buffered up front, then plays the instant its card is visible and rests off screen.
+    let visible = false;
     const play = () => {
+      if (!visible) return;
       send("mute");
       send("playVideo");
     };
+    const io = new IntersectionObserver(
+      ([e]) => {
+        visible = e.isIntersecting;
+        if (visible) play();
+        else send("pauseVideo");
+      },
+      { threshold: 0.1 },
+    );
+    if (box.current) io.observe(box.current);
     let from = start;
     let lastLoop = 0;
 
     // keep nudging until it plays
     let tries = 0;
     const kicker = window.setInterval(() => {
-      if (playingRef.current || ++tries > 60) return clearInterval(kicker);
+      if (playingRef.current || (visible && ++tries > 60)) return clearInterval(kicker);
       play();
     }, 1500);
     // Any interaction nudges a stalled preview to start (throttled; stops once it plays)
@@ -120,6 +133,7 @@ export default function AutoPlayer({ id, start = 0, zoom = 118 }: { id: string; 
     window.addEventListener("message", onMessage);
     return () => {
       clearInterval(kicker);
+      io.disconnect();
       gestures.forEach((g) => window.removeEventListener(g, onGesture));
       window.removeEventListener("message", onMessage);
     };
