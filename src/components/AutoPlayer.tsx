@@ -13,7 +13,9 @@ const subscribe = (l: () => void) => {
   listeners.add(l);
   return () => listeners.delete(l);
 };
-const cap = () => (typeof document !== "undefined" && document.documentElement.classList.contains("lite") ? 3 : 6);
+// Everything plays on open; only weak devices (html.lite) keep a small limit.
+const cap = () => (typeof document !== "undefined" && document.documentElement.classList.contains("lite") ? 4 : Infinity);
+let order = 0;
 function enter(key: string) {
   if (!queue.includes(key)) queue.push(key);
   emit();
@@ -26,7 +28,7 @@ function leave(key: string) {
 
 /**
  * Muted, looping YouTube preview that sits on top of a card's thumbnail.
- * Plays only while the card is on screen; starts at `start` seconds and loops back
+ * Starts as soon as the page loads; starts at `start` seconds and loops back
  * there (or to 0:00 if the video is shorter than `start`).
  */
 export default function AutoPlayer({ id, start = 0, zoom = 118 }: { id: string; start?: number; zoom?: number }) {
@@ -44,33 +46,22 @@ export default function AutoPlayer({ id, start = 0, zoom = 118 }: { id: string; 
     () => false,
   );
 
-  // Join the queue while visible
+  // Start every preview as soon as the page has loaded (no waiting for scroll).
+  // Players are staggered a little so they do not all boot in the same instant.
   useEffect(() => {
     const el = box.current;
     if (!el) return;
     const conn = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
     if (conn?.saveData) return;
-    // Only load a player after the card has stayed on screen briefly, so fast scrolling
-    // never spawns a burst of YouTube iframes. Also release all players while the tab is hidden.
-    let dwell = 0;
-    const io = new IntersectionObserver(
-      ([e]) => {
-        window.clearTimeout(dwell);
-        if (e.isIntersecting) dwell = window.setTimeout(() => !document.hidden && enter(key), 450);
-        else leave(key);
-      },
-      { threshold: 0.2 },
-    );
-    io.observe(el);
-    const onVisibility = () => {
-      if (document.hidden) leave(key);
-      else if (el.getBoundingClientRect().top < window.innerHeight && el.getBoundingClientRect().bottom > 0) enter(key);
+    let t = 0;
+    const begin = () => {
+      t = window.setTimeout(() => enter(key), 300 + order++ * 250);
     };
-    document.addEventListener("visibilitychange", onVisibility);
+    if (document.readyState === "complete") begin();
+    else window.addEventListener("load", begin, { once: true });
     return () => {
-      window.clearTimeout(dwell);
-      document.removeEventListener("visibilitychange", onVisibility);
-      io.disconnect();
+      window.removeEventListener("load", begin);
+      window.clearTimeout(t);
       leave(key);
     };
   }, [key]);
